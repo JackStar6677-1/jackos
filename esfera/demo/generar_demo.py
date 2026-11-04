@@ -43,5 +43,5 @@ json.dump([{"name": f"servicio-{k}", "status": estados[k % 5 if k % 7 else 0], "
           open(f"{AQUI}/api/docker_list.json", "w"))
 nn = 90
 json.dump({"name": "AGENTES", "nodes": [{"id": k, "l": f"n{k}", "k": "x"} for k in range(nn)],
-           "edges": [[int(rng.integers(0, nn)), int(rng.integers(0, nn)), "x"] for _ in range(240)]}, open(f"{AQUI}/api/saori_grafo.json", "w"))
+           "edges": [[int(rng.integers(0, nn)), int(rng.integers(0, nn)), "x"] for _ in range(240)]}, open(f"{AQUI}/api/agentes.json", "w"))
 print("demo generado: nodos", N, "aristas", len(E))

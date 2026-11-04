@@ -38,7 +38,7 @@ const glowTex = (() => { const c = document.createElement('canvas'); c.width = c
 const root = new THREE.Group(); scene.add(root);
 const ticks = [];   // animadores (t en [0,1) del bucle)
 
-// ---------- 1) bola global (todos los grafos de SAORI)
+// ---------- 1) bola global (todos tus grafos)
 const DATA = Q.get('data') || './demo/data', API = Q.get('api') || './demo/api';
 const base = DATA;
 const ds = await cargarDataset(base);
@@ -98,8 +98,8 @@ const fleet = JSON.parse(await (await fetch(`${API}/docker_list.json`)).text());
   ticks.push((t) => { w.rotation.y = TAU * 2 * t; pts.material.size = 7 + 2 * Math.sin(TAU * 8 * t); });
 }
 
-// ---------- 4) grafo de SAORI (agentes y servicios): constelacion en una capa interior, con pulsos
-const sg = JSON.parse(await (await fetch(`${API}/saori_grafo.json`)).text());
+// ---------- 4) grafo de agentes (agentes y servicios): constelacion en una capa interior, con pulsos
+const sg = JSON.parse(await (await fetch(`${API}/agentes.json`)).text());
 {
   const n = sg.nodes.length, shell = R * .62, P = [];
   sg.nodes.forEach((_, i) => { const y = 1 - 2 * (i + .5) / n, rr = Math.sqrt(1 - y * y), a = i * 2.399963;
