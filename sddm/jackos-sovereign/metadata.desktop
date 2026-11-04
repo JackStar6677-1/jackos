@@ -1,0 +1,19 @@
+[SddmGreeterTheme]
+Name=JackOS Sovereign
+Name[es]=JackOS Soberano
+Description=Pantalla de inicio de sesión SDDM animada (JackOS)
+Description[es]=Pantalla de inicio de sesión SDDM de JackStar Sovereign (Nova, Star, DrakesCraft, SAORI)
+Author=JackStar (Jack)
+Copyright=(c) 2026, JackStar
+License=GPL-3.0+
+Type=sddm-theme
+Version=1.0
+Website=https://web.drakescraft.cl
+Screenshot=preview.png
+MainScript=Main.qml
+ConfigFile=theme.conf
+TranslationsDirectory=translations
+Email=pablo.elias.miranda.292003@gmail.com
+Theme-Id=jackos-sovereign
+Theme-API=2.0
+QtVersion=6

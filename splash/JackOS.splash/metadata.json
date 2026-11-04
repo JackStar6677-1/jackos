@@ -1,0 +1,11 @@
+{
+    "KPackageStructure": "Plasma/LookAndFeel",
+    "KPlugin": {
+        "Authors": [ { "Name": "JackStar6677" } ],
+        "Description": "Splash JackOS: obsidiana, violeta y dorado. Adaptado del splash de Blackwall-Kubuntu (Nixcobt)",
+        "Id": "JackOS.splash",
+        "License": "GPL-2.0+",
+        "Name": "JackOS (Splash)",
+        "Version": "1.0"
+    }
+}

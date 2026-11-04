@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="starGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffd700" stop-opacity="0.9"/>
+      <stop offset="40%" stop-color="#ff007f" stop-opacity="0.4"/>
+      <stop offset="70%" stop-color="#7928ca" stop-opacity="0.2"/>
+      <stop offset="100%" stop-color="#7928ca" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="goldGrad1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fff8db"/>
+      <stop offset="50%" stop-color="#ffd700"/>
+      <stop offset="100%" stop-color="#ff8c00"/>
+    </linearGradient>
+    <linearGradient id="goldGrad2" x1="100%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#ffd700"/>
+      <stop offset="50%" stop-color="#e6ac00"/>
+      <stop offset="100%" stop-color="#b38600"/>
+    </linearGradient>
+    <linearGradient id="cyanGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00f2fe"/>
+      <stop offset="100%" stop-color="#4facfe"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Aura Glow -->
+  <circle cx="256" cy="256" r="230" fill="url(#starGlow)"/>
+
+  <!-- Concentric Radiant Rings -->
+  <circle cx="256" cy="256" r="160" fill="none" stroke="url(#goldGrad1)" stroke-width="1.5" stroke-dasharray="4,8" opacity="0.6"/>
+  <circle cx="256" cy="256" r="130" fill="none" stroke="#00f2fe" stroke-width="1" stroke-dasharray="2,6" opacity="0.5"/>
+
+  <!-- Octagram Star (8-pointed Sovereign Crest) -->
+  <g filter="url(#glow)">
+    <!-- Cardinal Spikes (North, South, East, West) -->
+    <!-- North -->
+    <polygon points="256,40 268,230 256,256" fill="url(#goldGrad1)"/>
+    <polygon points="256,40 244,230 256,256" fill="url(#goldGrad2)"/>
+    <!-- South -->
+    <polygon points="256,472 268,282 256,256" fill="url(#goldGrad2)"/>
+    <polygon points="256,472 244,282 256,256" fill="url(#goldGrad1)"/>
+    <!-- East -->
+    <polygon points="472,256 282,244 256,256" fill="url(#goldGrad1)"/>
+    <polygon points="472,256 282,268 256,256" fill="url(#goldGrad2)"/>
+    <!-- West -->
+    <polygon points="40,256 230,244 256,256" fill="url(#goldGrad2)"/>
+    <polygon points="40,256 230,268 256,256" fill="url(#goldGrad1)"/>
+
+    <!-- Diagonal Spikes (NE, NW, SE, SW) -->
+    <!-- NE -->
+    <polygon points="408,104 278,240 256,256" fill="url(#cyanGrad)" opacity="0.95"/>
+    <polygon points="408,104 266,250 256,256" fill="#0070f3" opacity="0.95"/>
+    <!-- NW -->
+    <polygon points="104,104 240,234 256,256" fill="#0070f3" opacity="0.95"/>
+    <polygon points="104,104 250,244 256,256" fill="url(#cyanGrad)" opacity="0.95"/>
+    <!-- SE -->
+    <polygon points="408,408 278,272 256,256" fill="#0070f3" opacity="0.95"/>
+    <polygon points="408,408 266,262 256,256" fill="url(#cyanGrad)" opacity="0.95"/>
+    <!-- SW -->
+    <polygon points="104,408 240,278 256,256" fill="url(#cyanGrad)" opacity="0.95"/>
+    <polygon points="104,408 250,268 256,256" fill="#0070f3" opacity="0.95"/>
+  </g>
+
+  <!-- Central Diamond Core -->
+  <polygon points="256,216 296,256 256,296 216,256" fill="#0b0f19" stroke="url(#goldGrad1)" stroke-width="2"/>
+  <circle cx="256" cy="256" r="16" fill="url(#goldGrad1)" filter="url(#glow)"/>
+  <circle cx="256" cy="256" r="6" fill="#ffffff"/>
+</svg>
