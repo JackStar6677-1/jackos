@@ -17,6 +17,7 @@
 | 🔐 **Login (SDDM)** | [`sddm/jackos-sovereign`](sddm/jackos-sovereign) | Pantalla de inicio de sesión animada: anillos orbitales, núcleo de estrella, reloj y teclado |
 | 🌌 **Splash de Plasma** | [`splash/JackOS.splash`](splash/JackOS.splash) | Pantalla de carga con título glitch y barra de progreso violeta |
 | 🧬 **Fondo animado** | [`animado/generar.py`](animado/generar.py) | Genera un loop 1080p (pulso, barrido, energía por grietas, datos cayendo, glitch) desde cualquier imagen. Adaptado del generador de Blackwall-Kubuntu |
+| 🔮 **Esfera Jarvis** | [`esfera/`](esfera) | Bola 3D de grafos vivos en la GPU con anillos HUD, flota en órbita y pulsos. Renderizable a video en bucle para fondo de pantalla |
 | 🎞️ **Fondo de video** | [`wallpaper/`](wallpaper) | Wallpaper animado en Plasma 6 con decodificación por hardware (VA-API): ~6 % de CPU en vez de ~101 % |
 
 <img src="assets/divider.svg" width="100%">
