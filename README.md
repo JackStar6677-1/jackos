@@ -36,8 +36,8 @@
 ## ▌03 · JACK-IN (instalación)
 
 ```bash
-git clone https://github.com/JackStar6677-1/jackos-terminal
-cd jackos-terminal
+git clone https://github.com/JackStar6677-1/jackos
+cd jackos
 ./install.sh                          # terminal + Konsole (sin sudo)
 sudo apt install fzf eza bat zoxide   # opcional pero recomendado
 ```
