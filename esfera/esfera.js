@@ -6,22 +6,28 @@ import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
 import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
 import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
 import { OutputPass } from 'three/addons/postprocessing/OutputPass.js';
+import { ShaderPass } from 'three/addons/postprocessing/ShaderPass.js';
 import { cargarDataset, Hologram } from './holo.js';
 
 const Q = new URLSearchParams(location.search);
 const T = +(Q.get('T') || 61.95), FPS = +(Q.get('fps') || 15), WALL = Q.has('f');
 const TAU = Math.PI * 2, R = 100;
+const WIDGET = Q.has('widget');   // widget de escritorio: fondo transparente, brillo aditivo sobre lo que haya detras
+if (WIDGET) document.documentElement.style.background = document.body.style.background = 'transparent';
 const GOLD = [1, .62, .12];
 const CPJ = [[1, .7, .2], [1, .45, .1], [1, .85, .4], [1, .3, .1], [.9, .6, .3], [1, .75, .05], [1, .5, .25], [.95, .9, .6]];
 
 const canvas = document.getElementById('gl');
-const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: true });
-renderer.setClearColor(0x000000, 1); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .85;
+const renderer = new THREE.WebGLRenderer({ canvas, antialias: false, powerPreference: 'high-performance', preserveDrawingBuffer: !WIDGET, alpha: WIDGET, premultipliedAlpha: true });
+renderer.setClearColor(0x000000, WIDGET ? 0 : 1); renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = .85;
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(46, 1, 1, 4000);
 const composer = new EffectComposer(renderer);
 const bloom = new UnrealBloomPass(new THREE.Vector2(256, 256), .4, .3, .6);
 composer.addPass(new RenderPass(scene, camera)); composer.addPass(bloom); composer.addPass(new OutputPass());
+if (WIDGET) composer.addPass(new ShaderPass({ uniforms: { tDiffuse: { value: null } },
+  vertexShader: 'varying vec2 vUv;void main(){vUv=uv;gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.);}',
+  fragmentShader: 'uniform sampler2D tDiffuse;varying vec2 vUv;void main(){vec3 c=texture2D(tDiffuse,vUv).rgb;float a=clamp(max(c.r,max(c.g,c.b)),0.,1.);gl_FragColor=vec4(min(c,vec3(a)),a);}' }));
 let W = innerWidth, H = innerHeight;
 renderer.setPixelRatio(1); renderer.setSize(W, H, false); composer.setSize(W, H);
 bloom.setSize(W * .5, H * .5);
@@ -43,7 +49,7 @@ const DATA = Q.get('data') || './demo/data', API = Q.get('api') || './demo/api';
 const base = DATA;
 const ds = await cargarDataset(base);
 const holo = new Hologram(ds, { scale: R });
-holo.setFrac({ node: 1, edge: 1, cross: 1, pulse: 1 });
+holo.setFrac(WIDGET ? { node: .7, edge: .55, cross: .7, pulse: .8 } : { node: 1, edge: 1, cross: 1, pulse: 1 });
 holo.getU('uBase').set(...GOLD);
 holo.getU('uCP').forEach((v, i) => v.set(...CPJ[i]));
 holo.setU('uProjMix', .72); holo.setU('uCommMix', 0);
@@ -98,7 +104,7 @@ const fleet = JSON.parse(await (await fetch(`${API}/docker_list.json`)).text());
   ticks.push((t) => { w.rotation.y = TAU * 2 * t; pts.material.size = 7 + 2 * Math.sin(TAU * 8 * t); });
 }
 
-// ---------- 4) grafo de agentes (agentes y servicios): constelacion en una capa interior, con pulsos
+// ---------- 4) grafo de agentes y servicios: constelacion en una capa interior, con pulsos
 const sg = JSON.parse(await (await fetch(`${API}/agentes.json`)).text());
 {
   const n = sg.nodes.length, shell = R * .62, P = [];
@@ -133,9 +139,9 @@ function frame(t01, camAng) {
   holo.group.rotation.y = TAU * t01;
   ticks.forEach((f) => f(t01));
   const ang = camAng ?? 0.35 * Math.sin(TAU * t01);
-  camera.position.set(Math.sin(ang) * 20, 70 + 25 * Math.sin(TAU * t01 + 1), 395); camera.lookAt(0, 0, 0);
+  camera.position.set(Math.sin(ang) * 20, 70 + 25 * Math.sin(TAU * t01 + 1), WIDGET ? 480 : 395); camera.lookAt(0, 0, 0);
   composer.render();
 }
 window.renderFrame = (i) => { frame((i / (T * FPS)) % 1); return true; };
 window.__listo = true;
-if (!WALL) { let t0 = performance.now(); const loop = () => { frame(((performance.now() - t0) / 1000 / T) % 1); requestAnimationFrame(loop); }; loop(); }
+if (!WALL) { let t0 = performance.now(), last = 0; const loop = (now) => { requestAnimationFrame(loop); if (WIDGET && now - last < 41) return; last = now; frame(((now - t0) / 1000 / T) % 1); }; requestAnimationFrame(loop); }

@@ -25,3 +25,42 @@ ffmpeg -i fondo.mp4 -stream_loop 3 -i esfera.mp4 -filter_complex \
 ```
 
 Sin etiquetas de texto a propósito: se puede mostrar en stream sin filtrar nombres de proyectos.
+
+## Widget flotante en el escritorio (KDE Plasma 6 · Wayland)
+
+Más liviano que meterla en un video: la esfera se dibuja en vivo en una ventana **transparente** que se queda debajo de todo, encima de tu fondo (que puede ser un video, un ASCII, lo que sea).
+
+```bash
+sudo apt install python3-pyqt6.qtwebengine
+python3 widget.py            # abre el widget (sirve la carpeta en 127.0.0.1:8765)
+ESFERA_DIR=/ruta/a/tus/datos ESFERA_SIZE=760 python3 widget.py
+```
+
+Wayland no deja que una app se posicione sola: lo hace una regla de KWin. Añade esto a `~/.config/kwinrulesrc` (ajusta `position`/`size` a tu pantalla) y ejecuta `qdbus6 org.kde.KWin /KWin reconfigure`:
+
+```ini
+[General]
+count=1
+rules=jackos-esfera
+
+[jackos-esfera]
+Description=JackOS Esfera
+wmclass=jackos-esfera
+wmclassmatch=1
+below=true
+belowrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+skippager=true
+skippagerrule=2
+skipswitcher=true
+skipswitcherrule=2
+noborder=true
+noborderrule=2
+position=1077,213
+positionrule=2
+size=760,760
+sizerule=2
+```
+
+Notas: deja pasar el ratón (no estorba a tus iconos), se oculta con «Mostrar escritorio» y pinta a ~24 fps.
