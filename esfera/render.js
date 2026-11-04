@@ -7,7 +7,7 @@ const b = await puppeteer.launch({ executablePath: '/usr/bin/google-chrome', hea
   args: [`--window-size=${W},${H}`, '--no-sandbox', '--use-angle=gl', '--ignore-gpu-blocklist', '--enable-gpu-rasterization', '--enable-webgl', '--disable-frame-rate-limit'] });
 const p = await b.newPage(); await p.setViewport({ width: +W, height: +H, deviceScaleFactor: 1 });
 p.on('pageerror', (e) => console.error('pageerror', e.message));
-await p.goto(`http://127.0.0.1:8765/esfera.html?f=0&fps=${FPS}&T=${T}`, { waitUntil: 'load' });
+await p.goto(`${process.env.BASE || 'http://127.0.0.1:8765'}/esfera.html?f=0&fps=${FPS}&T=${T}`, { waitUntil: 'load' });
 await p.waitForFunction('window.__listo === true', { timeout: 120000 });
 console.log('gpu:', await p.evaluate(() => { const g = document.createElement('canvas').getContext('webgl2'); const e = g.getExtension('WEBGL_debug_renderer_info'); return g.getParameter(e.UNMASKED_RENDERER_WEBGL); }));
 const ff = spawn('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'image2pipe', '-framerate', FPS, '-i', '-', '-c:v', 'libx264', '-preset', 'veryfast', '-crf', '14', '-pix_fmt', 'yuv420p', OUT], { stdio: ['pipe', 'inherit', 'inherit'] });

@@ -8,6 +8,17 @@
 
 <img src="assets/divider.svg" width="100%">
 
+## ▌00 · PANEL EN VIVO
+
+<table>
+<tr>
+<td align="center" width="50%"><img src="assets/esfera.gif" alt="Esfera Jarvis (datos de demostración)"><br><sub><b>Esfera Jarvis</b> · grafos en la GPU, anillos HUD, flota en órbita</sub></td>
+<td align="center" width="50%"><img src="assets/terminal.svg" alt="Terminal JackOS"><br><sub><b>Terminal JackOS</b> · fzf, zoxide, eza, bat · prompt con estado</sub></td>
+</tr>
+</table>
+
+<img src="assets/divider.svg" width="100%">
+
 ## ▌01 · QUÉ HAY EN LA RED
 
 | Nodo | Carpeta | Qué hace |

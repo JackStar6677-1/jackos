@@ -4,6 +4,8 @@ import * as THREE from 'three';
 
 const K_POS = 1.15 / 30000;
 const TEXW = 2048;
+// el parpadeo de los nodos debe dar ciclos enteros en el bucle (?T=segundos) para que el video cierre sin salto
+const TWK = (() => { const T = +(new URLSearchParams(location.search).get('T') || 61.95); return (2 * Math.PI * Math.max(1, Math.round(2.3 * T / (2 * Math.PI))) / T).toFixed(5); })();
 
 export async function cargarDataset(base, onProg) {
   const get = async (f, t) => {
@@ -91,7 +93,7 @@ void main(){
   vec3 c=nCol(m);
   float br=0.55+dg*dg*1.6;
   br*= uSelOn>.5 ? (st>.5 ? 2.0 : uDim) : 1.;
-  br*=0.82+0.18*sin(uTime*2.23123+i*1.37);
+  br*=0.82+0.18*sin(uTime*${TWK}+i*1.37);
   c=mix(c,vec3(1.),clamp(dg*dg*dg*.9+(st>1.5?.9:0.)+(st>2.5?.5:0.),0.,1.));
   vC=c*br*uGain;
 }`;

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" role="img" aria-label="Terminal JackOS animada">
+  <defs><linearGradient id="b" x1="0" x2="1"><stop offset="0" stop-color="#7d55d9"/><stop offset=".5" stop-color="#d9aa58"/><stop offset="1" stop-color="#d4001a"/></linearGradient></defs>
+  <rect width="640" height="400" rx="10" fill="#080a16"/>
+  <rect x="1" y="1" width="638" height="398" rx="10" fill="none" stroke="url(#b)" stroke-width="2"/>
+  <rect y="0" width="640" height="30" rx="10" fill="#10122a"/>
+  <circle cx="20" cy="15" r="5" fill="#d4001a"/><circle cx="38" cy="15" r="5" fill="#d9aa58"/><circle cx="56" cy="15" r="5" fill="#2fe0ff"/>
+  <text x="320" y="20" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="12" fill="#9a94b8">Konsole · JackOS</text>
+  <g font-family="'JetBrains Mono',monospace" font-size="14">
+    <g><text x="20" y="62"><tspan fill="#9d6bff">Jack</tspan><tspan fill="#d9aa58">@Nova </tspan><tspan fill="#5bc9a0">◆</tspan><tspan fill="#2fe0ff">  ~/jackos</tspan></text>
+       <text x="20" y="82" fill="#d9aa58">╰─<tspan fill="#9d6bff">❯</tspan><tspan fill="#e8e6ef"> ll</tspan></text>
+       <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;.03;.5;.95;1" dur="12s" repeatCount="indefinite"/></g>
+    <g fill="#e8e6ef"><text x="20" y="110"><tspan fill="#5bc9a0">drwxr-xr-x</tspan>  animado/</text>
+       <text x="20" y="130"><tspan fill="#5bc9a0">drwxr-xr-x</tspan>  esfera/</text>
+       <text x="20" y="150"><tspan fill="#5bc9a0">drwxr-xr-x</tspan>  sddm/</text>
+       <text x="20" y="170"><tspan fill="#5bc9a0">drwxr-xr-x</tspan>  splash/</text>
+       <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.12;.18;.95;1" dur="12s" repeatCount="indefinite"/></g>
+    <g><text x="20" y="206"><tspan fill="#9d6bff">Jack</tspan><tspan fill="#d9aa58">@Nova </tspan><tspan fill="#5bc9a0">◆</tspan><tspan fill="#2fe0ff">  ~/jackos</tspan></text>
+       <text x="20" y="226" fill="#d9aa58">╰─<tspan fill="#9d6bff">❯</tspan><tspan fill="#e8e6ef"> ^R </tspan><tspan fill="#d9aa58">esfera</tspan></text>
+       <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.3;.34;.95;1" dur="12s" repeatCount="indefinite"/></g>
+    <g><rect x="20" y="240" width="600" height="110" fill="#10122a" stroke="#7d55d9"/>
+       <text x="32" y="262" fill="#d4001a">▌</text><text x="48" y="262" fill="#e8e6ef">node render.js 2560 1600 15 61.95</text>
+       <text x="32" y="284" fill="#9a94b8">  python3 demo/generar_demo.py</text>
+       <text x="32" y="306" fill="#9a94b8">  sddm-greeter-qt6 --test-mode</text>
+       <text x="32" y="328" fill="#7d55d9">  3/128 ▏fzf</text>
+       <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.42;.46;.95;1" dur="12s" repeatCount="indefinite"/></g>
+    <rect x="20" y="372" width="9" height="16" fill="#d4001a"><animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/></rect>
+  </g>
+</svg>
