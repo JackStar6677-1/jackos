@@ -53,9 +53,21 @@
 ```bash
 git clone https://github.com/JackStar6677-1/jackos
 cd jackos
-./install.sh                          # terminal + Konsole (sin sudo)
-sudo apt install fzf eza bat zoxide   # opcional pero recomendado
+./install.sh lista                    # ver las partes
+./install.sh todo                     # terminal + barra + esfera + wallpaper + splash (sin sudo)
+./install.sh terminal barra           # o solo lo que quieras, por partes
+./install.sh sddm                     # login animado: pide sudo y NO lo activa
+sudo apt install fastfetch fzf eza bat zoxide   # opcional pero recomendado
 ```
+
+| Parte | Qué instala |
+|---|---|
+| `terminal` | bash (fzf, zoxide, eza, bat), perfil y esquema Blackwall de Konsole, fastfetch |
+| `barra` | plasmoides JackOS Monitor y Ticker |
+| `esfera` | esfera Jarvis como widget flotante (`jackos-esfera`) |
+| `wallpaper` | variables VA-API para fondo de video fluido |
+| `splash` | pantalla de carga de Plasma |
+| `sddm` | login animado (sudo; la activas tú, con rescate documentado) |
 
 Abre una ventana nueva de Konsole y elige el perfil **JackOS**.
 
