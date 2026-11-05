@@ -1,7 +1,7 @@
 [Appearance]
 AntiAliasFonts=true
 BoldIntense=true
-ColorScheme=CyberpunkCapri
+ColorScheme=JackOS-Blackwall
 Font=JetBrainsMono Nerd Font,11,-1,5,50,0,0,0,0,0
 UseFontLineCharacters=true
 

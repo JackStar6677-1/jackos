@@ -13,7 +13,7 @@
 <table>
 <tr>
 <td align="center" width="50%"><img src="assets/esfera.gif" alt="Esfera Jarvis (datos de demostración)"><br><sub><b>Esfera Jarvis</b> · grafos en la GPU, anillos HUD, flota en órbita</sub></td>
-<td align="center" width="50%"><img src="assets/terminal.svg" alt="Terminal JackOS"><br><sub><b>Terminal JackOS</b> · fastfetch Blackwall, fzf, zoxide, eza, bat · prompt con estado</sub></td>
+<td align="center" width="50%"><img src="assets/terminal.svg?v=3" alt="Terminal JackOS"><br><sub><b>Terminal JackOS</b> · fastfetch Blackwall, fzf, zoxide, eza, bat · prompt con estado</sub></td>
 </tr>
 </table>
 
@@ -59,6 +59,13 @@ sudo apt install fzf eza bat zoxide   # opcional pero recomendado
 
 Abre una ventana nueva de Konsole y elige el perfil **JackOS**.
 
+### Replicar la terminal (como en la foto)
+
+1. `./install.sh` copia el perfil y el esquema de Konsole (`JackOS-Blackwall`: rojo, morado y dorado, 82 % de opacidad con blur), la config de `fastfetch` y los alias.
+2. Instala la fuente **JetBrainsMono Nerd Font** (sin ella faltan los iconos de la ficha) y `fastfetch`: `sudo apt install fastfetch`.
+3. Abre Konsole con el perfil **JackOS**; para la transparencia en Wayland activa *Desenfoque del fondo* en *Configuración → Editar perfil actual → Apariencia* si no se aplica sola.
+4. **Tu propio logo:** la ficha usa `fastfetch/logo-blackwall.txt` (el ojo del Blackwall). Para poner otro, guarda tu arte (ASCII o Braille) en un `.txt`, apunta `"logo" → "source"` de `~/.config/fastfetch/config.jsonc` a él y colorea por bloques con `$1`, `$2`, `$3` al inicio de cada línea (rojo, morado, dorado). Hay arte hecho en [emojicombos.com](https://emojicombos.com/cyberpunk-edgerunners-ascii-art); revisa su licencia antes de publicarlo.
+
 **Login animado (SDDM)**, pruébalo antes de activarlo:
 
 ```bash
@@ -98,8 +105,8 @@ Convierte un video corto en loop a estilo ASCII/terminal, expórtalo en H.264 a 
 
 ## ▌04b · BARRA Y DOCK (Plasma 6)
 
-<img src="assets/barra.svg" width="100%" alt="Barra superior JackOS">
-<p align="center"><img src="assets/dock.svg" width="55%" alt="Dock JackOS"></p>
+<img src="assets/barra.svg?v=3" width="100%" alt="Barra superior JackOS">
+<p align="center"><img src="assets/dock.svg?v=3" width="55%" alt="Dock JackOS"></p>
 
 Dos plasmoides propios, sin dependencias, que reemplazan a los monitores de KDE (cuyas etiquetas se recortaban):
 
