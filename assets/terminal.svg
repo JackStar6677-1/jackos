@@ -1,28 +1,40 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" role="img" aria-label="Terminal JackOS animada">
-  <defs><linearGradient id="b" x1="0" x2="1"><stop offset="0" stop-color="#7d55d9"/><stop offset=".5" stop-color="#d9aa58"/><stop offset="1" stop-color="#d4001a"/></linearGradient></defs>
-  <rect width="640" height="400" rx="10" fill="#080a16"/>
-  <rect x="1" y="1" width="638" height="398" rx="10" fill="none" stroke="url(#b)" stroke-width="2"/>
-  <rect y="0" width="640" height="30" rx="10" fill="#10122a"/>
-  <circle cx="20" cy="15" r="5" fill="#d4001a"/><circle cx="38" cy="15" r="5" fill="#d9aa58"/><circle cx="56" cy="15" r="5" fill="#2fe0ff"/>
-  <text x="320" y="20" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="12" fill="#9a94b8">Konsole · JackOS</text>
-  <g font-family="'JetBrains Mono',monospace" font-size="14">
-    <g><text x="20" y="62"><tspan fill="#9d6bff">Jack</tspan><tspan fill="#d9aa58">@Nova </tspan><tspan fill="#5bc9a0">◆</tspan><tspan fill="#2fe0ff">  ~/jackos</tspan></text>
-       <text x="20" y="82" fill="#d9aa58">╰─<tspan fill="#9d6bff">❯</tspan><tspan fill="#e8e6ef"> ll</tspan></text>
-       <animate attributeName="opacity" values="0;1;1;1;0" keyTimes="0;.03;.5;.95;1" dur="12s" repeatCount="indefinite"/></g>
-    <g fill="#e8e6ef"><text x="20" y="110"><tspan fill="#5bc9a0">drwxr-xr-x</tspan>  animado/</text>
-       <text x="20" y="130"><tspan fill="#5bc9a0">drwxr-xr-x</tspan>  esfera/</text>
-       <text x="20" y="150"><tspan fill="#5bc9a0">drwxr-xr-x</tspan>  sddm/</text>
-       <text x="20" y="170"><tspan fill="#5bc9a0">drwxr-xr-x</tspan>  splash/</text>
-       <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.12;.18;.95;1" dur="12s" repeatCount="indefinite"/></g>
-    <g><text x="20" y="206"><tspan fill="#9d6bff">Jack</tspan><tspan fill="#d9aa58">@Nova </tspan><tspan fill="#5bc9a0">◆</tspan><tspan fill="#2fe0ff">  ~/jackos</tspan></text>
-       <text x="20" y="226" fill="#d9aa58">╰─<tspan fill="#9d6bff">❯</tspan><tspan fill="#e8e6ef"> ^R </tspan><tspan fill="#d9aa58">esfera</tspan></text>
-       <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.3;.34;.95;1" dur="12s" repeatCount="indefinite"/></g>
-    <g><rect x="20" y="240" width="600" height="110" fill="#10122a" stroke="#7d55d9"/>
-       <text x="32" y="262" fill="#d4001a">▌</text><text x="48" y="262" fill="#e8e6ef">node render.js 2560 1600 15 61.95</text>
-       <text x="32" y="284" fill="#9a94b8">  python3 demo/generar_demo.py</text>
-       <text x="32" y="306" fill="#9a94b8">  sddm-greeter-qt6 --test-mode</text>
-       <text x="32" y="328" fill="#7d55d9">  3/128 ▏fzf</text>
-       <animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.42;.46;.95;1" dur="12s" repeatCount="indefinite"/></g>
-    <rect x="20" y="372" width="9" height="16" fill="#d4001a"><animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/></rect>
-  </g>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 860 560" width="860" height="560" role="img" aria-label="Terminal JackOS animada">
+<defs><linearGradient id="b" x1="0" x2="1"><stop offset="0" stop-color="#7d55d9"/><stop offset=".5" stop-color="#d4a02c"/><stop offset="1" stop-color="#d4001a"/></linearGradient></defs>
+<rect width="860" height="560" rx="10" fill="#06020a"/><rect x="1" y="1" width="858" height="558" rx="10" fill="none" stroke="url(#b)" stroke-width="2"/>
+<rect width="860" height="30" rx="10" fill="#14081c"/><circle cx="20" cy="15" r="5" fill="#d4001a"/><circle cx="38" cy="15" r="5" fill="#d4a02c"/><circle cx="56" cy="15" r="5" fill="#a480ff"/>
+<text x="430" y="20" text-anchor="middle" font-family="'JetBrains Mono',monospace" font-size="12" fill="#9a8cb0">Konsole · JackOS // Blackwall</text>
+<g font-family="'JetBrains Mono',monospace" font-size="13" xml:space="preserve">
+<g><text x="20" y="58"><tspan fill="#a480ff">jack</tspan><tspan fill="#d4a02c"> in </tspan><tspan fill="#a480ff">~/jackos</tspan></text><text x="20" y="76" fill="#d4001a">╰─❯<tspan fill="860"> fastfetch</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.000;0.012;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<text x="20" y="100" font-size="12"><tspan fill="#a480ff">         ▄▄▄▄▄▄▄▄▄▄▄▄▄▄</tspan></text>
+<text x="20" y="115" font-size="12"><tspan fill="#a480ff">     ▄▄██▀▀▀▀▀▀▀▀▀▀▀▀▀▀██▄▄</tspan></text>
+<text x="20" y="130" font-size="12"><tspan fill="#d4001a">   ▄██▀▀                ▀▀██▄</tspan></text>
+<text x="20" y="145" font-size="12"><tspan fill="#d4001a">  ██▀    </tspan><tspan fill="#d4a02c">▄▄▄██████████▄▄▄</tspan><tspan fill="#d4001a">    ▀██</tspan></text>
+<text x="20" y="160" font-size="12"><tspan fill="#d4001a"> ██    </tspan><tspan fill="#d4a02c">▄██▀▀▀        ▀▀▀██▄</tspan><tspan fill="#d4001a">    ██</tspan></text>
+<text x="20" y="175" font-size="12"><tspan fill="#d4001a"> ██   </tspan><tspan fill="#d4a02c">██▀   </tspan><tspan fill="#a480ff">▄▄██████▄▄</tspan><tspan fill="#d4a02c">   ▀██</tspan><tspan fill="#d4001a">   ██</tspan></text>
+<text x="20" y="190" font-size="12"><tspan fill="#d4001a"> ██   </tspan><tspan fill="#d4a02c">██   </tspan><tspan fill="#a480ff">██</tspan><tspan fill="#d4001a">▀▀▀██▀▀▀</tspan><tspan fill="#a480ff">██</tspan><tspan fill="#d4a02c">   ██</tspan><tspan fill="#d4001a">   ██</tspan></text>
+<text x="20" y="205" font-size="12"><tspan fill="#d4001a"> ██   </tspan><tspan fill="#d4a02c">██▄   </tspan><tspan fill="#a480ff">▀▀██████▀▀</tspan><tspan fill="#d4a02c">   ▄██</tspan><tspan fill="#d4001a">   ██</tspan></text>
+<text x="20" y="220" font-size="12"><tspan fill="#d4001a"> ██    </tspan><tspan fill="#d4a02c">▀██▄▄▄        ▄▄▄██▀</tspan><tspan fill="#d4001a">    ██</tspan></text>
+<text x="20" y="235" font-size="12"><tspan fill="#d4001a">  ██▄    </tspan><tspan fill="#d4a02c">▀▀▀██████████▀▀▀</tspan><tspan fill="#d4001a">    ▄██</tspan></text>
+<text x="20" y="250" font-size="12"><tspan fill="#d4001a">   ▀██▄▄                ▄▄██▀</tspan></text>
+<text x="20" y="265" font-size="12"><tspan fill="#a480ff">     ▀▀██▄▄▄▄▄▄▄▄▄▄▄▄▄▄██▀▀</tspan></text>
+<text x="20" y="280" font-size="12"><tspan fill="#a480ff">         ▀▀▀▀▀▀▀▀▀▀▀▀▀▀</tspan></text>
+<animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;.05;.062;.95;1" dur="16s" repeatCount="indefinite"/>
+<g><text x="330" y="96" fill="#d4001a">┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓</text><text x="330" y="112"><tspan fill="#d4001a">┃</tspan><tspan fill="#d4a02c"> jack</tspan><tspan fill="#7d55d9">@</tspan><tspan fill="#d4001a">Nova</tspan><tspan fill="#7d55d9">  ·  JackOS // Blackwall</tspan></text><text x="330" y="128" fill="#d4001a">┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛</text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.070;0.082;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="330" y="158"><tspan fill="#d4001a">▌</tspan><tspan fill="#d4a02c"> SISTEMA </tspan><tspan fill="#7d55d9">─────────────────────────────────</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.090;0.102;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="175"><tspan fill="#8f60dc">SO        </tspan><tspan x="440" fill="#e8dcf0">Kubuntu 26.04 LTS</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.102;0.114;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="192"><tspan fill="#8f60dc">Kernel    </tspan><tspan x="440" fill="#e8dcf0">7.0.0-generic</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.114;0.126;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="209"><tspan fill="#8f60dc">Activo    </tspan><tspan x="440" fill="#e8dcf0">2 hours, 11 mins</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.126;0.138;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="226"><tspan fill="#8f60dc">Shell     </tspan><tspan x="440" fill="#e8dcf0">bash 5.3</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.138;0.150;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="330" y="249"><tspan fill="#d4001a">▌</tspan><tspan fill="#d4a02c"> ESCRITORIO </tspan><tspan fill="#7d55d9">──────────────────────────────</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.150;0.162;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="266"><tspan fill="#8f60dc">DE        </tspan><tspan x="440" fill="#e8dcf0">KDE Plasma 6.6</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.162;0.174;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="283"><tspan fill="#8f60dc">WM        </tspan><tspan x="440" fill="#e8dcf0">KWin (Wayland)</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.174;0.186;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="300"><tspan fill="#8f60dc">Terminal  </tspan><tspan x="440" fill="#e8dcf0">konsole</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.186;0.198;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="330" y="323"><tspan fill="#d4001a">▌</tspan><tspan fill="#d4a02c"> HARDWARE </tspan><tspan fill="#7d55d9">────────────────────────────────</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.198;0.210;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="340"><tspan fill="#8f60dc">CPU       </tspan><tspan x="440" fill="#e8dcf0">11th Gen Intel i7 · 48 °C</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.210;0.222;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="357"><tspan fill="#8f60dc">GPU       </tspan><tspan x="440" fill="#e8dcf0">NVIDIA MX450 · Intel Iris Xe</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.222;0.234;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="374"><tspan fill="#8f60dc">RAM       </tspan><tspan x="440" fill="#d4a02c">▰▰▰▰▰▰▰</tspan><tspan fill="#4a3a5c">▱▱▱▱▱▱▱</tspan><tspan fill="#e8dcf0">  53%</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.234;0.246;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="391"><tspan fill="#8f60dc">Raíz      </tspan><tspan x="440" fill="#a480ff">▰▰▰▰</tspan><tspan fill="#4a3a5c">▱▱▱▱▱▱▱▱▱▱</tspan><tspan fill="#e8dcf0">  26%</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.246;0.258;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="338" y="408"><tspan fill="#8f60dc">Batería   </tspan><tspan x="440" fill="#d4a02c">▰▰▰▰▰▰▰▰</tspan><tspan fill="#4a3a5c">▱▱▱▱▱▱</tspan><tspan fill="#e8dcf0">  55%</tspan></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.258;0.270;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="330" y="429" fill="#d4001a">┏<tspan fill="#7d55d9">────────────────────────────────────────────</tspan>┓</text><text x="338" y="447"><tspan fill="#d4001a">● </tspan><tspan fill="#d4a02c">● </tspan><tspan fill="#ffd65a">● </tspan><tspan fill="#a480ff">● </tspan><tspan fill="#a480ff">● </tspan><tspan fill="#e254d0">● </tspan><tspan fill="#e8dcf0">● </tspan><tspan fill="#7d55d9">● </tspan></text><text x="338" y="467" fill="#d4a02c">▌ WAKE UP, SAMURAI // THE BLACKWALL IS WATCHING</text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.270;0.282;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+<g><text x="20" y="505"><tspan fill="#a480ff">jack</tspan><tspan fill="#d4a02c"> in </tspan><tspan fill="#a480ff">~/jackos</tspan><tspan fill="#d4a02c"> on </tspan><tspan fill="#d4001a"> main</tspan></text><text x="20" y="523" fill="#d4001a">╰─❯<tspan fill="860"> ^R </tspan><tspan fill="#d4a02c">esfera</tspan><tspan fill="#d4001a">▌</tspan><animate attributeName="opacity" values="1;0;1" dur="1s" repeatCount="indefinite"/></text><animate attributeName="opacity" values="0;0;1;1;0" keyTimes="0;0.550;0.562;0.95;1" dur="16s" repeatCount="indefinite"/></g>
+</g></svg>
