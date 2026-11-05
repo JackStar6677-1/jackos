@@ -1,5 +1,4 @@
-// Fastfetch — configuracion de Jack (Saori)
-// Logo oficial de Ubuntu integrado en Fastfetch
+// Fastfetch JackOS — ficha Blackwall: marcos rojos, datos morados, valores dorados
 {
   "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
 
@@ -7,56 +6,51 @@
     "type": "file",
     "source": "~/.config/fastfetch/logo-blackwall.txt",
     "color": { "1": "38;5;160", "2": "38;5;98", "3": "38;5;178" },
-    "padding": { "top": 2, "right": 4 }
+    "padding": { "top": 1, "left": 1, "right": 3 }
   },
 
   "display": {
     "separator": "  ",
-    "color": { "keys": "38;5;135", "title": "38;5;178" },
+    "color": { "keys": "38;5;135", "title": "38;5;178", "output": "38;5;253", "separator": "38;5;96" },
     "percent": { "type": ["bar", "num"], "green": "38;5;98", "yellow": "38;5;178", "red": "38;5;160" },
-        "bar": {
-      "char": { "elapsed": "█", "total": "░" },
-      "border": { "left": " [", "right": "] " },
-      "width": 12
-    },
+    "bar": { "char": { "elapsed": "▰", "total": "▱" }, "border": { "left": "", "right": " " }, "width": 14 },
     "size": { "ndigits": 1 }
   },
 
   "modules": [
-    { "type": "title", "color": { "user": "38;5;178", "at": "38;5;96", "host": "38;5;160" } },
+    { "type": "custom", "format": "{#38;5;160}▛▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▀▜{#}" },
+    { "type": "title", "key": "▌", "format": "{#38;5;178}{user-name}{#38;5;96}@{#38;5;160}{host-name}{#38;5;96}  ·  JackOS // Blackwall", "keyColor": "38;5;160" },
+    { "type": "custom", "format": "{#38;5;160}▙▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄▟{#}" },
 
-    { "type": "custom", "format": "{#38;5;96}  ── SISTEMA ──────────────────────────────{#}" },
-    { "type": "os",       "key": "  󰚌 SO",        "format": "{name} {version}" },
-    { "type": "kernel",   "key": "   Kernel",    "format": "{release}" },
-    { "type": "host",     "key": "  󰌢 Equipo" },
-    { "type": "uptime",   "key": "  󰅐 Encendido" },
-    { "type": "packages", "key": "  󰏖 Paquetes" },
-    { "type": "shell",    "key": "   Shell" },
+    { "type": "custom", "format": "{#38;5;160}▌{#38;5;178} SISTEMA {#38;5;96}────────────────────────────────────{#}" },
+    { "type": "os",       "key": "  󰚌 SO         ",        "format": "{name} {version}" },
+    { "type": "kernel",   "key": "   Kernel      ",    "format": "{release}" },
+    { "type": "host",     "key": "  󰌢 Equipo     " },
+    { "type": "uptime",   "key": "  󰅐 Activo     " },
+    { "type": "packages", "key": "  󰏖 Paquetes   " },
+    { "type": "shell",    "key": "   Shell       " },
 
-    { "type": "custom", "format": "{#38;5;96}  ── ESCRITORIO ───────────────────────────{#}" },
-    { "type": "de",           "key": "  󰧨 DE" },
-    { "type": "wm",           "key": "   WM" },
-    { "type": "theme",        "key": "  󰉼 Tema" },
-    { "type": "icons",        "key": "  󰀻 Iconos" },
-    { "type": "terminal",     "key": "   Terminal" },
-    { "type": "terminalfont", "key": "   Fuente" },
-    { "type": "display",      "key": "  󰍹 Pantalla" },
+    { "type": "custom", "format": "{#38;5;160}▌{#38;5;178} ESCRITORIO {#38;5;96}──────────────────────────────{#}" },
+    { "type": "de",           "key": "  󰧨 DE         " },
+    { "type": "wm",           "key": "   WM          " },
+    { "type": "terminal",     "key": "   Terminal    " },
+    { "type": "terminalfont", "key": "   Fuente      " },
+    { "type": "display",      "key": "  󰍹 Pantalla   " },
 
-    { "type": "custom", "format": "{#38;5;96}  ── HARDWARE ─────────────────────────────{#}" },
-    { "type": "cpu",    "key": "  󰻠 CPU", "temp": true },
-    { "type": "gpu",    "key": "  󰢮 GPU" },
-    { "type": "memory", "key": "   RAM" },
-    { "type": "swap",   "key": "  󰓡 Swap" },
-    { "type": "disk",   "key": "  󰋊 Raiz",   "folders": "/" },
-    { "type": "battery","key": "  󰁹 Bateria" },
+    { "type": "custom", "format": "{#38;5;160}▌{#38;5;178} HARDWARE {#38;5;96}────────────────────────────────{#}" },
+    { "type": "cpu",    "key": "  󰻠 CPU        ", "temp": true },
+    { "type": "gpu",    "key": "  󰢮 GPU        " },
+    { "type": "memory", "key": "   RAM         " },
+    { "type": "swap",   "key": "  󰓡 Swap       " },
+    { "type": "disk",   "key": "  󰋊 Raíz       ", "folders": "/" },
+    { "type": "battery","key": "  󰁹 Batería    " },
 
-    { "type": "custom", "format": "{#38;5;96}  ── RED ──────────────────────────────────{#}" },
-    { "type": "localip", "key": "  󰩟 IP local", "showIpv4": true, "showIpv6": false, "compact": true },
-    { "type": "wifi",    "key": "  󰤨 WiFi" },
-    { "type": "datetime","key": "  󰃭 Fecha", "format": "{1}-{3}-{11} {14}:{18}" },
+    { "type": "custom", "format": "{#38;5;160}▌{#38;5;178} RED {#38;5;96}─────────────────────────────────────{#}" },
+    { "type": "localip", "key": "  󰩟 IP local   ", "showIpv4": true, "showIpv6": false, "compact": true },
+    { "type": "wifi",    "key": "  󰤨 WiFi       " },
 
-    "break",
+    { "type": "custom", "format": "{#38;5;160}▛{#38;5;96}──────────────────────────────────────────────────{#38;5;160}▟{#}" },
     { "type": "colors", "symbol": "circle", "paddingLeft": 2 },
-    "break"
+    { "type": "custom", "format": "{#38;5;178}  ▌ WAKE UP, SAMURAI // THE BLACKWALL IS WATCHING{#}" }
   ]
 }
