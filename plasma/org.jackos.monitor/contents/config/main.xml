@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <kcfgfile name=""/>
+  <group name="General">
+    <entry name="items" type="String">
+      <default>[{"label":"CPU","sensor":"cpu/all/usage","color":"#00f0ff"},{"label":"RAM","sensor":"memory/physical/usedPercent","color":"#ff00aa"},{"label":"↓","sensor":"network/all/download","color":"#fcee0a"},{"label":"↑","sensor":"network/all/upload","color":"#ff6a00"},{"label":"CPU°","sensor":"cpu/all/averageTemperature","color":"#00ff9d"},{"label":"GPU°","sensor":"gpu/gpu1/temperature","color":"#d4001a"},{"label":"SSD","sensor":"disk/all/usedPercent","color":"#7d55d9"}]</default>
+    </entry>
+    <entry name="fontSize" type="Int"><default>0</default></entry>
+    <entry name="bold" type="Bool"><default>false</default></entry>
+    <entry name="showBar" type="Bool"><default>true</default></entry>
+    <entry name="colorValue" type="Bool"><default>false</default></entry>
+    <entry name="spacing" type="Int"><default>6</default></entry>
+    <entry name="updateMs" type="Int"><default>1000</default></entry>
+  </group>
+</kcfg>

@@ -1,0 +1,14 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Authors": [{"Name": "Jack"}],
+    "Category": "System Information",
+    "Description": "Cinta cyberpunk que rellena la barra: títulos, nombres, código y hex en movimiento, editable",
+    "Icon": "format-text-code",
+    "Id": "org.jackos.ticker",
+    "License": "GPL-3.0-or-later",
+    "Name": "JackOS Ticker",
+    "Version": "1.0.0"
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

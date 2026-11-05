@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<kcfg xmlns="http://www.kde.org/standards/kcfg/1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.kde.org/standards/kcfg/1.0 http://www.kde.org/standards/kcfg/1.0/kcfg.xsd">
+  <kcfgfile name=""/>
+  <group name="General">
+    <entry name="texts" type="String">
+      <default>▌BLACKWALL // PERIMETER ACTIVE
+NETWATCH :: SCANNING
+ICE LAYER 7 :: STABLE
+ROGUE AI DETECTED :: SECTOR 9
+SAORI :: ONLINE
+DRAKESCRAFT.CL
+ASTRA // WATCHING
+DO NOT CROSS THE BLACKWALL
+WAKE UP, SAMURAI</default>
+    </entry>
+    <entry name="colorA" type="String"><default>#ff1a3c</default></entry>
+    <entry name="colorB" type="String"><default>#00f0ff</default></entry>
+    <entry name="fontSize" type="Int"><default>0</default></entry>
+    <entry name="speed" type="Int"><default>40</default></entry>
+    <entry name="hexStream" type="Bool"><default>true</default></entry>
+  </group>
+</kcfg>

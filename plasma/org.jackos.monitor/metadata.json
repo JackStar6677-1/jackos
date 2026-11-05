@@ -1,0 +1,14 @@
+{
+  "KPackageStructure": "Plasma/Applet",
+  "KPlugin": {
+    "Authors": [{"Name": "Jack"}],
+    "Category": "System Information",
+    "Description": "Monitor de recursos compacto y editable para la barra: sensores, etiquetas, colores y estilo a gusto",
+    "Icon": "utilities-system-monitor",
+    "Id": "org.jackos.monitor",
+    "License": "GPL-3.0-or-later",
+    "Name": "JackOS Monitor",
+    "Version": "1.0.0"
+  },
+  "X-Plasma-API-Minimum-Version": "6.0"
+}

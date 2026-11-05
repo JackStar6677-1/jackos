@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1700 44" width="1700" height="44" font-family="Hack, DejaVu Sans Mono, monospace" font-size="13">
+<rect width="1700" height="44" fill="#000"/>
+<circle cx="22" cy="22" r="3" fill="#e8e8f0"/><circle cx="14" cy="16" r="2" fill="#e8e8f0"/><circle cx="14" cy="28" r="2" fill="#e8e8f0"/><circle cx="30" cy="12" r="2" fill="#e8e8f0"/>
+<polygon points="54,7 159,7 159,31 153,37 48,37 48,13" fill="#00f0ff" fill-opacity=".10" stroke="#00f0ff" stroke-opacity=".65"/>
+<rect x="54" y="35" width="99" height="2" fill="#00f0ff"/>
+<text x="59" y="27" fill="#00f0ff" font-weight="bold" letter-spacing="1">CPU</text><text x="94" y="27" fill="#e8e8f0">23,6 %</text>
+<polygon points="171,7 276,7 276,31 270,37 165,37 165,13" fill="#ff00aa" fill-opacity=".10" stroke="#ff00aa" stroke-opacity=".65"/>
+<rect x="171" y="35" width="99" height="2" fill="#ff00aa"/>
+<text x="176" y="27" fill="#ff00aa" font-weight="bold" letter-spacing="1">RAM</text><text x="211" y="27" fill="#e8e8f0">51,0 %</text>
+<polygon points="288,7 399,7 399,31 393,37 282,37 282,13" fill="#fcee0a" fill-opacity=".10" stroke="#fcee0a" stroke-opacity=".65"/>
+<rect x="288" y="35" width="105" height="2" fill="#fcee0a"/>
+<text x="293" y="27" fill="#fcee0a" font-weight="bold" letter-spacing="1">↓</text><text x="310" y="27" fill="#e8e8f0">3,3 KiB/s</text>
+<polygon points="411,7 522,7 522,31 516,37 405,37 405,13" fill="#ff6a00" fill-opacity=".10" stroke="#ff6a00" stroke-opacity=".65"/>
+<rect x="411" y="35" width="105" height="2" fill="#ff6a00"/>
+<text x="416" y="27" fill="#ff6a00" font-weight="bold" letter-spacing="1">↑</text><text x="433" y="27" fill="#e8e8f0">8,2 KiB/s</text>
+<polygon points="534,7 656,7 656,31 650,37 528,37 528,13" fill="#00ff9d" fill-opacity=".10" stroke="#00ff9d" stroke-opacity=".65"/>
+<rect x="534" y="35" width="116" height="2" fill="#00ff9d"/>
+<text x="539" y="27" fill="#00ff9d" font-weight="bold" letter-spacing="1">CPU°</text><text x="583" y="27" fill="#e8e8f0">45,0 °C</text>
+<polygon points="668,7 774,7 774,31 768,37 662,37 662,13" fill="#d4001a" fill-opacity=".10" stroke="#d4001a" stroke-opacity=".65"/>
+<rect x="668" y="35" width="100" height="2" fill="#d4001a"/>
+<text x="673" y="27" fill="#d4001a" font-weight="bold" letter-spacing="1">GPU°</text><text x="717" y="27" fill="#e8e8f0">43 °C</text>
+<polygon points="786,7 891,7 891,31 885,37 780,37 780,13" fill="#7d55d9" fill-opacity=".10" stroke="#7d55d9" stroke-opacity=".65"/>
+<rect x="786" y="35" width="99" height="2" fill="#7d55d9"/>
+<text x="791" y="27" fill="#7d55d9" font-weight="bold" letter-spacing="1">SSD</text><text x="826" y="27" fill="#e8e8f0">30,9 %</text>
+<defs><clipPath id="c"><rect x="907" y="0" width="563" height="44"/></clipPath><linearGradient id="f" x1="0" x2="1"><stop offset="0" stop-color="#000"/><stop offset=".08" stop-color="#000" stop-opacity="0"/><stop offset=".92" stop-color="#000" stop-opacity="0"/><stop offset="1" stop-color="#000"/></linearGradient></defs>
+<g clip-path="url(#c)"><g><text y="27" font-weight="bold" letter-spacing="1" xml:space="preserve"><tspan x="907" fill="#ff1a3c">▌BLACKWALL // PERIMETER ACTIVE   ◢◤   0x58CA 7A2C 384F 91B0   ◢◤   NETWATCH :: SCANNING   ◢◤   ROGUE AI DETECTED :: SECTOR 9   ◢◤   0x05B6 DC36 5856 62E6   ◢◤   WAKE UP, SAMURAI   ◢◤   </tspan><tspan fill="#00f0ff">▌BLACKWALL // PERIMETER ACTIVE   ◢◤   0x58CA 7A2C 384F 91B0   ◢◤   NETWATCH :: SCANNING   ◢◤   ROGUE AI DETECTED :: SECTOR 9   ◢◤   0x05B6 DC36 5856 62E6   ◢◤   WAKE UP, SAMURAI   ◢◤   </tspan></text><animateTransform attributeName="transform" type="translate" from="0 0" to="-1560 0" dur="40s" repeatCount="indefinite"/></g><animate attributeName="opacity" values="1;1;.2;1;.5;1;1" keyTimes="0;.9;.91;.92;.93;.94;1" dur="6.5s" repeatCount="indefinite"/></g>
+<rect x="907" width="563" height="44" fill="url(#f)"/>
+<text x="1530" y="19" fill="#e8e8f0" font-size="16" font-weight="bold" text-anchor="middle">9:51</text><text x="1530" y="35" fill="#e8e8f0" font-size="12" text-anchor="middle">jue 5 nov</text>
+<circle cx="1590" cy="22" r="5" fill="none" stroke="#e8e8f0" stroke-opacity=".8"/>
+<circle cx="1607" cy="22" r="5" fill="none" stroke="#e8e8f0" stroke-opacity=".8"/>
+<circle cx="1624" cy="22" r="5" fill="none" stroke="#e8e8f0" stroke-opacity=".8"/>
+<circle cx="1641" cy="22" r="5" fill="none" stroke="#e8e8f0" stroke-opacity=".8"/>
+<circle cx="1658" cy="22" r="5" fill="none" stroke="#e8e8f0" stroke-opacity=".8"/>
+<circle cx="1675" cy="22" r="5" fill="none" stroke="#e8e8f0" stroke-opacity=".8"/>
+</svg>

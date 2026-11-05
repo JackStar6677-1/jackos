@@ -30,6 +30,8 @@
 | 🧬 **Fondo animado** | [`animado/generar.py`](animado/generar.py) | Genera un loop 1080p (pulso, barrido, energía por grietas, datos cayendo, glitch) desde cualquier imagen. Adaptado del generador de Blackwall-Kubuntu |
 | 🔮 **Esfera Jarvis** | [`esfera/`](esfera) | Bola 3D de grafos vivos en la GPU con anillos HUD, flota en órbita y pulsos. Se usa como **widget flotante** transparente sobre tu fondo o se renderiza a video en bucle |
 | 🎞️ **Fondo de video** | [`wallpaper/`](wallpaper) | Wallpaper animado en Plasma 6 con decodificación por hardware (VA-API): ~6 % de CPU en vez de ~101 % |
+| 📊 **Barra: Monitor** | [`plasma/org.jackos.monitor`](plasma/org.jackos.monitor) | Plasmoide de sensores en celdas neón con esquinas cortadas; sensor, etiqueta, color y orden editables desde la configuración |
+| 📡 **Barra: Ticker** | [`plasma/org.jackos.ticker`](plasma/org.jackos.ticker) | Cinta Blackwall que rellena la barra: mensajes editables, flujo hex vivo y glitch ocasional |
 
 <img src="assets/divider.svg" width="100%">
 
@@ -90,6 +92,21 @@ Usa el `.mp4` resultante con el plugin de arriba. El `generar.py` es una adaptac
 
 ### Fondo ASCII (tarea para Nix)
 Convierte un video corto en loop a estilo ASCII/terminal, expórtalo en H.264 a 15–24 fps y úsalo como fondo. **Mi video no va en el repo**: pesa cientos de MB y deriva de material con copyright. Hazte el tuyo.
+
+<img src="assets/divider.svg" width="100%">
+
+## ▌04b · BARRA Y DOCK (Plasma 6)
+
+<img src="assets/barra.svg" width="100%" alt="Barra superior JackOS">
+<p align="center"><img src="assets/dock.svg" width="55%" alt="Dock JackOS"></p>
+
+Dos plasmoides propios, sin dependencias, que reemplazan a los monitores de KDE (cuyas etiquetas se recortaban):
+
+```bash
+cp -r plasma/org.jackos.monitor plasma/org.jackos.ticker ~/.local/share/plasma/plasmoids/
+```
+
+Luego clic derecho en el panel → *Añadir widgets* → **JackOS Monitor** y **JackOS Ticker** (el ticker se estira solo por el hueco libre). Todo se edita con clic derecho → *Configurar*. El **dock** va flotante, centrado, de 60 px y se oculta solo cuando una ventana lo tapa (`hiding = dodgewindows`). Para el fondo negro de barra y dock, pon `BackgroundNormal=0,0,0` en `[Colors:Window]` de `colors` de tu tema en `~/.local/share/plasma/desktoptheme/<tema>/`.
 
 <img src="assets/divider.svg" width="100%">
 
