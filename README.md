@@ -24,7 +24,8 @@
 | Nodo | Carpeta | Qué hace |
 |---|---|---|
 | ⌨️ **Terminal** | [`jackos-terminal.sh`](jackos-terminal.sh) | `fzf` (Ctrl+R / Ctrl+T / Alt+C) con colores JackOS, `zoxide` (`z carpeta`), `eza` con iconos y estado de git, `bat` en lugar de `cat` |
-| 🖥️ **Konsole** | [`konsole/`](konsole) | Perfil **JackOS** + esquema `CyberpunkCapri`, JetBrainsMono Nerd Font, cursor rojo Blackwall |
+| 🖥️ **Konsole** | [`konsole/`](konsole) | Perfil **JackOS** + esquemas `CyberpunkCapri` y **`JackOS-Blackwall`** (rojo, morado, dorado, 82 % de opacidad con blur), JetBrainsMono Nerd Font, cursor rojo |
+| 👁️ **Fastfetch** | [`fastfetch/`](fastfetch) | Ficha del sistema con el ojo del Blackwall en rojo/morado/dorado; barras de uso en morado → dorado → rojo |
 | 🔐 **Login (SDDM)** | [`sddm/jackos-sovereign`](sddm/jackos-sovereign) | Pantalla de inicio de sesión animada: anillos orbitales, núcleo de estrella, reloj y teclado |
 | 🌌 **Splash de Plasma** | [`splash/JackOS.splash`](splash/JackOS.splash) | Pantalla de carga con título glitch y barra de progreso violeta |
 | 🧬 **Fondo animado** | [`animado/generar.py`](animado/generar.py) | Genera un loop 1080p (pulso, barrido, energía por grietas, datos cayendo, glitch) desde cualquier imagen. Adaptado del generador de Blackwall-Kubuntu |

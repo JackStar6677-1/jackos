@@ -5,6 +5,7 @@ D="$(cd "$(dirname "$0")" && pwd)"
 mkdir -p ~/.config/bash ~/.local/share/konsole
 cp "$D/jackos-terminal.sh" ~/.config/bash/
 cp "$D"/konsole/* ~/.local/share/konsole/
+mkdir -p ~/.config/fastfetch && cp "$D"/fastfetch/* ~/.config/fastfetch/
 grep -q jackos-terminal ~/.bashrc || printf '\n[ -f "$HOME/.config/bash/jackos-terminal.sh" ] && . "$HOME/.config/bash/jackos-terminal.sh"\n' >> ~/.bashrc
 echo "Opcional: sudo apt install fzf eza bat zoxide"
 echo "Konsole: Ajustes > Perfiles > JackOS (fuente JetBrainsMono Nerd Font)"
