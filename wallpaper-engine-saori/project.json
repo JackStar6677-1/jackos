@@ -282,5 +282,8 @@
   "version": 2,
   "visibility": "public",
   "workshopid": "3836086355",
-  "workshopurl": "steam://url/CommunityFilePage/3836086355"
+  "workshopurl": "steam://url/CommunityFilePage/3836086355",
+  "audio": {
+    "enabled": true
+  }
 }
