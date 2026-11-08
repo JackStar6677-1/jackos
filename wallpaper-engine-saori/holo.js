@@ -50,7 +50,7 @@ uniform sampler2D tJ, tU, tM, tP;
 uniform float uMix, uScale, uTexW, uTime, uDim, uSelOn, uCore, uOnlyBridge;
 uniform float uSizeK, uGain, uPx, uTypeMask, uComm, uProjMix, uCommMix, uNodeLim;
 uniform float uAudioBass, uAudioMid, uAudioTreble, uShockwave;
-uniform float uRage, uSpikeIntensity;
+uniform float uRage, uSpikeIntensity, uBreathing;
 uniform vec3 uCP[8];
 uniform vec3 uBase;
 uniform vec3 uCoreColor;
@@ -92,9 +92,11 @@ void main(){
   float v = visOf(m, i);
   vec3 pos = nPos(i);
 
-  // Pure radial breathing preserves pristine spherical neural geometry
+  // Pure radial breathing (active only when breathing option is enabled)
   float r = length(pos);
-  pos *= 1.0 + (uAudioBass * 0.08 * sin(r * 0.05 - uTime * 2.0));
+  if (uBreathing > 0.5) {
+    pos *= 1.0 + (uAudioBass * 0.08 * sin(r * 0.05 - uTime * 2.0));
+  }
 
   // Controlled Electric Needles / Rogue Spikes:
   // Triggers ONLY during heavy bass kicks (bass > 0.65) or AI rage (uRage > 0.05)
@@ -113,35 +115,44 @@ void main(){
 
   float st = m.b;
   float dg = m.g;
-  float sz = (0.9 + dg * dg * dg * 8.0 + (st > 1.5 ? 9.0 : 0.0) + (st > 0.5 ? 2.5 : 0.0)) * uSizeK;
+  // Refined point size: crisp, high-contrast perceptron somas so the sphere remains transparent
+  float sz = (0.75 + dg * dg * 3.5 + (st > 1.5 ? 3.5 : 0.0) + (st > 0.5 ? 1.2 : 0.0)) * uSizeK;
 
-  // Bass scale reactivity
-  sz *= 1.0 + uAudioBass * 0.35;
+  // Bass scale reactivity (clean and controlled)
+  sz *= 1.0 + uAudioBass * 0.25;
 
   // Expanding shockwave ring impact
   if (uShockwave > 0.0) {
     float swDist = abs(r - uShockwave);
     float swPulse = exp(-swDist * swDist * 0.02);
-    sz += swPulse * 4.0;
+    sz += swPulse * 2.5;
   }
 
-  gl_PointSize = clamp(sz * uPx / max(-mv.z, 1.0), 1.0, 48.0);
+  // Clamped point size prevents hub nodes from overlapping into a solid white blur
+  gl_PointSize = clamp(sz * uPx / max(-mv.z, 1.0), 1.0, 22.0);
 
   vec3 c = nCol(m);
-  float br = 0.55 + dg * dg * 1.6;
-  br *= uSelOn > 0.5 ? (st > 0.5 ? 2.0 : uDim) : 1.0;
-  br *= 0.85 + 0.15 * sin(uTime * 2.5 + i * 1.37);
+  // Elegant node brightness: preserves individual node distinction and inner lattice visibility
+  float br = 0.18 + dg * 0.28;
+  br *= uSelOn > 0.5 ? (st > 0.5 ? 1.8 : uDim) : 1.0;
+  br *= 0.88 + 0.12 * sin(uTime * 2.5 + i * 1.37);
+
+  // Attenuate dense central cluster so thousands of overlapping nodes don't sum to pure white
+  float centerDist = length(pos);
+  float coreAttenuation = clamp(centerDist / 38.0, 0.20, 1.0);
+  br *= coreAttenuation;
 
   // Audio brightness amplification (clean, preserves neural contrast)
-  br *= 1.0 + uAudioBass * 0.55 + uAudioTreble * 0.25;
+  br *= 1.0 + uAudioBass * 0.40 + uAudioTreble * 0.18;
 
   if (uShockwave > 0.0) {
     float swDist = abs(r - uShockwave);
-    br += exp(-swDist * swDist * 0.02) * 1.5;
+    br += exp(-swDist * swDist * 0.02) * 0.8;
   }
 
-  c = mix(c, vec3(1.0), clamp(dg * dg * 0.40, 0.0, 0.45));
-  vC = c * br * uGain;
+  // Preserve vivid core colors (purple, gold, cyan) without bleaching to pure white
+  c = mix(c, vec3(1.0), clamp(dg * dg * 0.08, 0.0, 0.12));
+  vC = c * br * uGain * 0.32;
 }
 `;
 
@@ -152,9 +163,9 @@ varying vec3 vC;
 void main(){
   float d = length(gl_PointCoord - 0.5) * 2.0;
   if (d > 1.0) discard;
-  // Deep neural perceptron soma: crisp electric firing nucleus + delicate falloff
-  float a = exp(-d * d * 5.0) + exp(-d * d * 38.0) * 0.9;
-  gl_FragColor = vec4(vC * a, a);
+  // Crisp neural perceptron: sharp electric firing nucleus + fast falloff (prevents additive whiteout)
+  float a = exp(-d * d * 7.5) * 0.65 + exp(-d * d * 28.0) * 0.35;
+  gl_FragColor = vec4(vC * a, a * 0.85);
 }
 `;
 
@@ -174,8 +185,10 @@ void main(){
   float v = visOf(ma, aA) * visOf(mb, aB);
 
   // Synchronous radial breathing strictly matching node positions
-  pa *= 1.0 + (uAudioBass * 0.08 * sin(length(pa) * 0.05 - uTime * 2.0));
-  pb *= 1.0 + (uAudioBass * 0.08 * sin(length(pb) * 0.05 - uTime * 2.0));
+  if (uBreathing > 0.5) {
+    pa *= 1.0 + (uAudioBass * 0.08 * sin(length(pa) * 0.05 - uTime * 2.0));
+    pb *= 1.0 + (uAudioBass * 0.08 * sin(length(pb) * 0.05 - uTime * 2.0));
+  }
 
   vec3 p = mix(pa, pb, t);
   float len = distance(pa, pb);
@@ -193,21 +206,22 @@ void main(){
   vec3 c = mix(nCol(ma), nCol(mb), t);
   float hubness = max(ma.g, mb.g);
 
-  float br = uEdgeA * (1.25 - 0.95 * pow(hubness, 1.2)) * (uBow > 0.0 ? 2.0 : 1.0 / (1.0 + pow(len / (0.3 * uScale), 1.6)));
+  // Filaments: Synaptic connections clearly visible throughout the 3D interior!
+  float br = uEdgeA * (1.20 - 0.70 * pow(hubness, 1.2)) * (uBow > 0.0 ? 1.5 : 1.0 / (1.0 + pow(len / (0.18 * uScale), 2.2)));
   if (uSelOn > 0.5) {
-    br = hl > 0.5 ? 2.2 + pth * 2.0 : br * uDim * 0.35;
-    c = mix(c, vec3(1.0), hl * 0.45 + pth * 0.4);
+    br = hl > 0.5 ? 2.0 + pth * 1.8 : br * uDim * 0.4;
+    c = mix(c, vec3(1.0), hl * 0.35 + pth * 0.35);
   }
 
   // Audio reactivity on filaments: Mid-frequencies illuminate synaptic connections
-  br *= 1.0 + uAudioMid * 1.3 + uAudioBass * 0.5;
+  br *= 1.0 + uAudioMid * 1.2 + uAudioBass * 0.4;
 
-  vC = c * br * uGain;
+  vC = c * br * uGain * 0.65;
   float h1 = hash(aA * 3.17 + aB);
   float h2 = hash(aB * 1.91 + aA * 0.37);
   vDash = t * len * uDashF * (1.0 + uAudioMid * 0.4) + h1 * 40.0;
-  vDuty = 0.18 + h2 * 0.5;
-  vBase = (hl > 0.5 ? 0.8 : 0.05);
+  vDuty = 0.16 + h2 * 0.38;
+  vBase = (hl > 0.5 ? 0.80 : 0.04);
 }
 `;
 
@@ -219,7 +233,7 @@ varying float vDash, vDuty, vBase;
 void main(){
   float f = fract(vDash);
   float m = f < vDuty ? 1.0 : vBase;
-  if (m < 0.01) discard;
+  if (m < 0.02) discard;
   gl_FragColor = vec4(vC * m, 1.0);
 }
 `;
@@ -237,13 +251,15 @@ void main(){
   float v = visOf(ma, aA) * visOf(mb, aB);
 
   // Audio reactivity: Speed up pulse traffic with mid/treble frequencies
-  float speedBoost = 1.0 + uAudioMid * 1.6 + uAudioTreble * 0.5;
+  float speedBoost = 1.0 + uAudioMid * 1.5 + uAudioTreble * 0.5;
   float t = fract((uTime * aS.x * speedBoost) + aS.y);
 
   vec3 pa = nPos(aA);
   vec3 pb = nPos(aB);
-  pa *= 1.0 + (uAudioBass * 0.08 * sin(length(pa) * 0.05 - uTime * 2.0));
-  pb *= 1.0 + (uAudioBass * 0.08 * sin(length(pb) * 0.05 - uTime * 2.0));
+  if (uBreathing > 0.5) {
+    pa *= 1.0 + (uAudioBass * 0.08 * sin(length(pa) * 0.05 - uTime * 2.0));
+    pb *= 1.0 + (uAudioBass * 0.08 * sin(length(pb) * 0.05 - uTime * 2.0));
+  }
   vec3 p = mix(pa, pb, t);
 
   float bow = (ma.r != mb.r) ? uBow : 0.0;
@@ -255,16 +271,27 @@ void main(){
   vec4 mv = modelViewMatrix * vec4(p, 1.0);
   gl_Position = v > 0.5 ? projectionMatrix * mv : vec4(2.0, 2.0, 2.0, 1.0);
 
-  float pSize = clamp(7.0 * uPx * 0.012 * uSizeK / max(-mv.z, 1.0) * 100.0, 2.0, 32.0);
-  pSize *= 1.0 + uAudioBass * 0.5;
+  // Clean, crisp moving energy pulses inside the neural core
+  float pSize = clamp(5.5 * uPx * 0.012 * uSizeK / max(-mv.z, 1.0) * 100.0, 2.0, 20.0);
+  pSize *= 1.0 + uAudioBass * 0.4;
   gl_PointSize = pSize;
 
   float fade = sin(3.14159 * t);
-  vC = mix(mix(nCol(ma), nCol(mb), t), vec3(1.0), 0.6) * (0.9 * fade) * (1.0 + uAudioMid * 1.2);
+  vC = mix(mix(nCol(ma), nCol(mb), t), vec3(1.0), 0.45) * (1.3 * fade) * (1.0 + uAudioMid * 1.1);
 }
 `;
 
-const PULSE_FS = NODE_FS;
+const PULSE_FS = /* glsl */`
+precision highp float;
+varying vec3 vC;
+
+void main(){
+  float d = length(gl_PointCoord - 0.5) * 2.0;
+  if (d > 1.0) discard;
+  float a = exp(-d * d * 6.0);
+  gl_FragColor = vec4(vC * a, a);
+}
+`;
 
 function mkTex(data, h) {
   const t = new THREE.DataTexture(data, TEXW, h, THREE.RGBAFormat, THREE.FloatType);
@@ -326,8 +353,8 @@ export class Hologram {
       uSelOn: { value: 0 },
       uCore: { value: 0 },
       uOnlyBridge: { value: 0 },
-      uSizeK: { value: 0.20 },
-      uGain: { value: 0.18 },
+      uSizeK: { value: 0.18 },
+      uGain: { value: 0.20 },
       uPx: { value: 600 },
       uTypeMask: { value: 65535 },
       uComm: { value: -1 },
@@ -338,14 +365,15 @@ export class Hologram {
       uBase: { value: new THREE.Vector3(1, 0.6, 0.1) },
       uCoreColor: { value: new THREE.Vector3(1, 0.8, 0.2) },
       uBow: { value: 0 },
-      uEdgeA: { value: 0.25 },
+      uEdgeA: { value: 0.38 },
       uDashF: { value: 0.28 },
       uAudioBass: { value: 0.0 },
       uAudioMid: { value: 0.0 },
       uAudioTreble: { value: 0.0 },
       uShockwave: { value: 0.0 },
       uRage: { value: 0.0 },
-      uSpikeIntensity: { value: 0.0 }
+      uSpikeIntensity: { value: 0.0 },
+      uBreathing: { value: 0.0 }
     };
 
     const mat = (vs, fs, extra = {}) => new THREE.ShaderMaterial({
@@ -427,8 +455,8 @@ export class Hologram {
     if (this.cross) this.group.add(this.cross);
     if (this.pulses) this.group.add(this.pulses);
 
-    this.baseGain = ds.meta.colores ? 0.35 : 0.45;
-    this.baseEdge = ds.meta.colores ? 0.18 : 0.38;
+    this.baseGain = ds.meta.colores ? 0.36 : 0.44;
+    this.baseEdge = ds.meta.colores ? 0.32 : 0.42;
     this.applyFrac();
   }
 
@@ -467,12 +495,13 @@ export class Hologram {
     }
   }
 
-  updateAudio(bass, mid, treble, shockwave = 0.0, rage = 0.0, spike = 0.0) {
+  updateAudio(bass, mid, treble, shockwave = 0.0, rage = 0.0, spike = 0.0, breathing = false) {
     this.setU('uAudioBass', Number.isFinite(bass) ? bass : 0.0);
     this.setU('uAudioMid', Number.isFinite(mid) ? mid : 0.0);
     this.setU('uAudioTreble', Number.isFinite(treble) ? treble : 0.0);
     this.setU('uShockwave', Number.isFinite(shockwave) ? shockwave : 0.0);
     this.setU('uRage', Number.isFinite(rage) ? rage : 0.0);
-    this.setU('uSpikeIntensity', Number.isFinite(spike) ? spike : 0.0);
+    this.setU('uSpikeIntensity', Number.isFinite(spike) ? spike : 0.0);
+    this.setU('uBreathing', breathing ? 1.0 : 0.0);
   }
 }
