@@ -50,6 +50,7 @@ uniform sampler2D tJ, tU, tM, tP;
 uniform float uMix, uScale, uTexW, uTime, uDim, uSelOn, uCore, uOnlyBridge;
 uniform float uSizeK, uGain, uPx, uTypeMask, uComm, uProjMix, uCommMix, uNodeLim;
 uniform float uAudioBass, uAudioMid, uAudioTreble, uShockwave;
+uniform float uRage, uSpikeIntensity;
 uniform vec3 uCP[8];
 uniform vec3 uBase;
 uniform vec3 uCoreColor;
@@ -91,9 +92,21 @@ void main(){
   float v = visOf(m, i);
   vec3 pos = nPos(i);
 
-  // Audio reactivity: expansion pulse from bass
+  // Pure radial breathing preserves pristine spherical neural geometry
   float r = length(pos);
   pos *= 1.0 + (uAudioBass * 0.08 * sin(r * 0.05 - uTime * 2.0));
+
+  // Controlled Electric Needles / Rogue Spikes:
+  // Triggers ONLY during heavy bass kicks (bass > 0.65) or AI rage (uRage > 0.05)
+  // and ONLY for ~3.5% of outer surface nodes so the sphere NEVER breaks or turns into a sun
+  float combRage = uRage + uSpikeIntensity;
+  if (combRage > 0.05 || uAudioBass > 0.65) {
+    float h = hash(i * 2.718 + floor(uTime * 14.0) * 0.1);
+    if (h > 0.965) {
+      float reach = (uAudioBass * 16.0 + combRage * 28.0);
+      pos += normalize(pos + vec3(1e-4)) * reach;
+    }
+  }
 
   vec4 mv = modelViewMatrix * vec4(pos, 1.0);
   gl_Position = v > 0.5 ? projectionMatrix * mv : vec4(2.0, 2.0, 2.0, 1.0);
@@ -103,28 +116,28 @@ void main(){
   float sz = (0.9 + dg * dg * dg * 8.0 + (st > 1.5 ? 9.0 : 0.0) + (st > 0.5 ? 2.5 : 0.0)) * uSizeK;
 
   // Bass scale reactivity
-  sz *= 1.0 + uAudioBass * 0.45;
+  sz *= 1.0 + uAudioBass * 0.35;
 
   // Expanding shockwave ring impact
   if (uShockwave > 0.0) {
     float swDist = abs(r - uShockwave);
     float swPulse = exp(-swDist * swDist * 0.02);
-    sz += swPulse * 5.0;
+    sz += swPulse * 4.0;
   }
 
-  gl_PointSize = clamp(sz * uPx / max(-mv.z, 1.0), 1.0, 64.0);
+  gl_PointSize = clamp(sz * uPx / max(-mv.z, 1.0), 1.0, 48.0);
 
   vec3 c = nCol(m);
   float br = 0.55 + dg * dg * 1.6;
   br *= uSelOn > 0.5 ? (st > 0.5 ? 2.0 : uDim) : 1.0;
   br *= 0.85 + 0.15 * sin(uTime * 2.5 + i * 1.37);
 
-  // Audio brightness amplification
-  br *= 1.0 + uAudioBass * 0.7 + uAudioTreble * 0.3;
+  // Audio brightness amplification (clean, preserves neural contrast)
+  br *= 1.0 + uAudioBass * 0.55 + uAudioTreble * 0.25;
 
   if (uShockwave > 0.0) {
     float swDist = abs(r - uShockwave);
-    br += exp(-swDist * swDist * 0.02) * 2.0;
+    br += exp(-swDist * swDist * 0.02) * 1.5;
   }
 
   c = mix(c, vec3(1.0), clamp(dg * dg * dg * 0.9 + (st > 1.5 ? 0.9 : 0.0) + (st > 2.5 ? 0.5 : 0.0), 0.0, 1.0));
@@ -139,6 +152,7 @@ varying vec3 vC;
 void main(){
   float d = length(gl_PointCoord - 0.5) * 2.0;
   if (d > 1.0) discard;
+  // Deep neural perceptron soma: crisp electric firing nucleus + delicate falloff
   float a = exp(-d * d * 5.0) + exp(-d * d * 38.0) * 0.9;
   gl_FragColor = vec4(vC * a, a);
 }
@@ -159,7 +173,7 @@ void main(){
   vec4 mb = nMeta(aB);
   float v = visOf(ma, aA) * visOf(mb, aB);
 
-  // Audio reactivity on endpoints
+  // Synchronous radial breathing strictly matching node positions
   pa *= 1.0 + (uAudioBass * 0.08 * sin(length(pa) * 0.05 - uTime * 2.0));
   pb *= 1.0 + (uAudioBass * 0.08 * sin(length(pb) * 0.05 - uTime * 2.0));
 
@@ -185,8 +199,8 @@ void main(){
     c = mix(c, vec3(1.0), hl * 0.45 + pth * 0.4);
   }
 
-  // Audio reactivity on filaments: Mid-frequencies make neural connections blaze
-  br *= 1.0 + uAudioMid * 1.4 + uAudioBass * 0.5;
+  // Audio reactivity on filaments: Mid-frequencies illuminate synaptic connections
+  br *= 1.0 + uAudioMid * 1.3 + uAudioBass * 0.5;
 
   vC = c * br * uGain;
   float h1 = hash(aA * 3.17 + aB);
@@ -223,11 +237,13 @@ void main(){
   float v = visOf(ma, aA) * visOf(mb, aB);
 
   // Audio reactivity: Speed up pulse traffic with mid/treble frequencies
-  float speedBoost = 1.0 + uAudioMid * 1.8 + uAudioTreble * 0.6;
+  float speedBoost = 1.0 + uAudioMid * 1.6 + uAudioTreble * 0.5;
   float t = fract((uTime * aS.x * speedBoost) + aS.y);
 
   vec3 pa = nPos(aA);
   vec3 pb = nPos(aB);
+  pa *= 1.0 + (uAudioBass * 0.08 * sin(length(pa) * 0.05 - uTime * 2.0));
+  pb *= 1.0 + (uAudioBass * 0.08 * sin(length(pb) * 0.05 - uTime * 2.0));
   vec3 p = mix(pa, pb, t);
 
   float bow = (ma.r != mb.r) ? uBow : 0.0;
@@ -240,7 +256,7 @@ void main(){
   gl_Position = v > 0.5 ? projectionMatrix * mv : vec4(2.0, 2.0, 2.0, 1.0);
 
   float pSize = clamp(7.0 * uPx * 0.012 * uSizeK / max(-mv.z, 1.0) * 100.0, 2.0, 32.0);
-  pSize *= 1.0 + uAudioBass * 0.6;
+  pSize *= 1.0 + uAudioBass * 0.5;
   gl_PointSize = pSize;
 
   float fade = sin(3.14159 * t);
@@ -310,8 +326,8 @@ export class Hologram {
       uSelOn: { value: 0 },
       uCore: { value: 0 },
       uOnlyBridge: { value: 0 },
-      uSizeK: { value: 1.0 },
-      uGain: { value: 0.55 },
+      uSizeK: { value: 0.20 },
+      uGain: { value: 0.18 },
       uPx: { value: 600 },
       uTypeMask: { value: 65535 },
       uComm: { value: -1 },
@@ -322,12 +338,14 @@ export class Hologram {
       uBase: { value: new THREE.Vector3(1, 0.6, 0.1) },
       uCoreColor: { value: new THREE.Vector3(1, 0.8, 0.2) },
       uBow: { value: 0 },
-      uEdgeA: { value: 0.35 },
-      uDashF: { value: 0.35 },
+      uEdgeA: { value: 0.25 },
+      uDashF: { value: 0.28 },
       uAudioBass: { value: 0.0 },
       uAudioMid: { value: 0.0 },
       uAudioTreble: { value: 0.0 },
-      uShockwave: { value: 0.0 }
+      uShockwave: { value: 0.0 },
+      uRage: { value: 0.0 },
+      uSpikeIntensity: { value: 0.0 }
     };
 
     const mat = (vs, fs, extra = {}) => new THREE.ShaderMaterial({
@@ -449,10 +467,12 @@ export class Hologram {
     }
   }
 
-  updateAudio(bass, mid, treble, shockwave = 0.0) {
+  updateAudio(bass, mid, treble, shockwave = 0.0, rage = 0.0, spike = 0.0) {
     this.setU('uAudioBass', Number.isFinite(bass) ? bass : 0.0);
     this.setU('uAudioMid', Number.isFinite(mid) ? mid : 0.0);
     this.setU('uAudioTreble', Number.isFinite(treble) ? treble : 0.0);
     this.setU('uShockwave', Number.isFinite(shockwave) ? shockwave : 0.0);
+    this.setU('uRage', Number.isFinite(rage) ? rage : 0.0);
+    this.setU('uSpikeIntensity', Number.isFinite(spike) ? spike : 0.0);
   }
 }

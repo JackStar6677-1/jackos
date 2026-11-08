@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <title>SAORI // NEURAL CORE MOBILE</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#02040a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; touch-action: none; }
+    html, body {
+      width: 100%;
+      height: 100%;
+      background: #02040a;
+      overflow: hidden;
+      font-family: 'DM Mono', monospace, ui-monospace, sans-serif;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+    #gl {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      display: block;
+      z-index: 1;
+      outline: none;
+    }
+    #hud-canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 5;
+    }
+    #vignette {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 3;
+      background: radial-gradient(circle at center, transparent 40%, rgba(2, 4, 10, 0.85) 100%),
+                  repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.12) 0px, rgba(0, 0, 0, 0.12) 1px, transparent 1px, transparent 3px);
+    }
+    #loading-indicator {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: #ffd24d;
+      font-size: 0.80rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      z-index: 10;
+      background: rgba(6, 12, 24, 0.88);
+      padding: 0.8rem 1.4rem;
+      border: 1px solid rgba(255, 210, 77, 0.35);
+      border-radius: 6px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 0 24px rgba(255, 210, 77, 0.2);
+      transition: opacity 0.6s ease;
+      pointer-events: none;
+      text-align: center;
+      width: 80%;
+      max-width: 320px;
+    }
+  </style>
+
+  <script type="importmap">
+  {
+    "imports": {
+      "three": "./vendor/three/three.module.min.js",
+      "three/addons/": "./vendor/three/jsm/"
+    }
+  }
+  </script>
+</head>
+<body>
+  <canvas id="gl"></canvas>
+  <div id="vignette"></div>
+  <canvas id="hud-canvas"></canvas>
+  <div id="loading-indicator">INICIALIZANDO MOTOR NEURAL SAORI MOBILE...</div>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
