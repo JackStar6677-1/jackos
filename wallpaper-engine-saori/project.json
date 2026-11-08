@@ -1,280 +1,257 @@
 {
-	"contentrating" : "Everyone",
-	"description" : "SAORI // JARVIS Neural Reactor Core reactivo a audio y música en tiempo real. 134,668 nodos y 366,093 filamentos con shaders GPU, domo de cielo Auroralis con auroras boreales y horizonte reactivo, terreno cyber grid 3D ondulante, anillos giroscópicos con ecualizador circular 3D, lluvia de código ASCII Matrix, osciloscopio Braille, terminal hacker y widget Now Playing.",
-	"file" : "index.html",
-	"general" : 
-	{
-		"properties" : 
-		{
-			"ai_aggression" : 
-			{
-				"options" : 
-				[
-					{
-						"label" : "Dinámico Reactivo (Puntas y Furia en Drops de Graves)",
-						"value" : "auto"
-					},
-					{
-						"label" : "Furia Permanente (IA Rebelde Escapada // Spikes Máximos)",
-						"value" : "always"
-					},
-					{
-						"label" : "Estable y Confinada (Sin Puntas Agresivas)",
-						"value" : "calm"
-					}
-				],
-				"order" : 7,
-				"text" : "Inestabilidad de IA / Puntas Violentas (Rogue AI Spikes)",
-				"type" : "combo",
-				"value" : "auto"
-			},
-			"audio_reactivity" : 
-			{
-				"max" : 5.0,
-				"min" : 0.5,
-				"order" : 2,
-				"step" : 0.1,
-				"text" : "Sensibilidad al Audio (General)",
-				"type" : "slider",
-				"value" : 2.8
-			},
-			"bass_pulse" : 
-			{
-				"max" : 4.0,
-				"min" : 0.5,
-				"order" : 3,
-				"step" : 0.1,
-				"text" : "Impacto de Graves (Bass Drop / Kicks)",
-				"type" : "slider",
-				"value" : 2.4
-			},
-			"blackwall_fx" : 
-			{
-				"order" : 18,
-				"text" : "Efectos Blackwall y Anomalías Glitch",
-				"type" : "bool",
-				"value" : true
-			},
-			"bloom_strength" : 
-			{
-				"max" : 1.5,
-				"min" : 0.1,
-				"order" : 5,
-				"step" : 0.05,
-				"text" : "Intensidad de Resplandor (Bloom)",
-				"type" : "slider",
-				"value" : 0.26
-			},
-			"camera_zoom" : 
-			{
-				"options" : 
-				[
-					{
-						"label" : "Órbita Exterior (Vista General Completa)",
-						"value" : "orbit"
-					},
-					{
-						"label" : "Interior del Núcleo (Observación 360° Sináptica)",
-						"value" : "inside"
-					},
-					{
-						"label" : "Primer Plano (Detalle Anillos & Stargate)",
-						"value" : "closeup"
-					}
-				],
-				"order" : 23,
-				"text" : "Modo de Vista (Zoom Núcleo / Órbita Exterior)",
-				"type" : "combo",
-				"value" : "orbit"
-			},
-			"filament_glow" : 
-			{
-				"max" : 3.0,
-				"min" : 0.2,
-				"order" : 4,
-				"step" : 0.1,
-				"text" : "Brillo de Red de Filamentos",
-				"type" : "slider",
-				"value" : 1.25
-			},
-			"fps_limit" : 
-			{
-				"options" : 
-				[
-					{
-						"label" : "30 FPS (Ultra Ahorro / Silencioso)",
-						"value" : "30"
-					},
-					{
-						"label" : "60 FPS (Equilibrado Fluido)",
-						"value" : "60"
-					},
-					{
-						"label" : "90 FPS (Alto Rendimiento)",
-						"value" : "90"
-					},
-					{
-						"label" : "120 FPS (Máximo Refresco)",
-						"value" : "120"
-					}
-				],
-				"order" : 22,
-				"text" : "Límite de Fotogramas (FPS / Optimización CPU)",
-				"type" : "combo",
-				"value" : "60"
-			},
-			"mouse_interaction" : 
-			{
-				"order" : 21,
-				"text" : "Parallax / Interacción con Ratón",
-				"type" : "bool",
-				"value" : true
-			},
-			"rotation_speed" : 
-			{
-				"max" : 3.0,
-				"min" : 0.0,
-				"order" : 6,
-				"step" : 0.1,
-				"text" : "Velocidad de Rotación Orbital",
-				"type" : "slider",
-				"value" : 1.0
-			},
-			"schemecolor" : 
-			{
-				"order" : 0,
-				"text" : "ui_browse_properties_scheme_color",
-				"type" : "color",
-				"value" : "0.49 0.33 0.85"
-			},
-			"show_ascii_panel" : 
-			{
-				"order" : 13,
-				"text" : "Visualizador ASCII en Movimiento",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_aurora_sky" : 
-			{
-				"order" : 16,
-				"text" : "Cielo y Auroras Auroralis (Shader)",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_circular_eq" : 
-			{
-				"order" : 17,
-				"text" : "Ecualizador Circular 3D en Anillos",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_code_rain" : 
-			{
-				"order" : 14,
-				"text" : "Lluvia de Código ASCII / Matrix Rain",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_cyber_grid" : 
-			{
-				"order" : 15,
-				"text" : "Terreno Cyber Grid 3D Ondulante",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_hud_rings" : 
-			{
-				"order" : 20,
-				"text" : "Anillos Orbitales HUD",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_media_widget" : 
-			{
-				"order" : 10,
-				"text" : "Widget de Música (Now Playing)",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_oscilloscope" : 
-			{
-				"order" : 12,
-				"text" : "Osciloscopio / Onda Sinusoidal Logarítmica",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_system_deck" : 
-			{
-				"order" : 11,
-				"text" : "Panel de Sistema, Reloj & Easter Eggs (JackStar / Star)",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_telemetry" : 
-			{
-				"order" : 9,
-				"text" : "Panel de Telemetría & Ecualizador",
-				"type" : "bool",
-				"value" : true
-			},
-			"show_terminal" : 
-			{
-				"order" : 8,
-				"text" : "Consola Hacker / Logs en Vivo",
-				"type" : "bool",
-				"value" : true
-			},
-			"starfield_bg" : 
-			{
-				"order" : 19,
-				"text" : "Fondo 3D Reactivo de Partículas Estelares",
-				"type" : "bool",
-				"value" : true
-			},
-			"theme" : 
-			{
-				"options" : 
-				[
-					{
-						"label" : "SAORI Multiverse (Morphing Dimensional Cósmico)",
-						"value" : "saori_universe"
-					},
-					{
-						"label" : "Project Capricorn (Arasaka Soulkiller / Rogue AI Blackwall)",
-						"value" : "capricorn"
-					},
-					{
-						"label" : "Ultron Protocol (Rogue AI Overdrive Carmesí / Ámbar)",
-						"value" : "ultron"
-					},
-					{
-						"label" : "JackOS Blackwall (Violeta / Dorado / Carmesí)",
-						"value" : "jackos"
-					},
-					{
-						"label" : "Jarvis Classic (Cian Neón / Ámbar)",
-						"value" : "jarvis"
-					},
-					{
-						"label" : "Cyberpunk 2077 (Neón Púrpura / Dorado)",
-						"value" : "cyberpunk"
-					},
-					{
-						"label" : "Matrix Neural (Verde Esmeralda)",
-						"value" : "matrix"
-					}
-				],
-				"order" : 1,
-				"text" : "Estilo Holográfico (Theme)",
-				"type" : "combo",
-				"value" : "saori_universe"
-			}
-		}
-	},
-	"preview" : "preview.png",
-	"tags" : [ "Abstract", "Cyberpunk", "Audio Responsive", "Sci-Fi", "Technology" ],
-	"title" : "SAORI // JARVIS Neural Core (Audio Reactive)",
-	"type" : "Web",
-	"version" : 1,
-	"visibility" : "public"
+  "contentrating": "Everyone",
+  "description": "SAORI // JARVIS Neural Reactor Core reactivo a audio y música en tiempo real. 134,668 nodos y 366,093 filamentos con shaders GPU, domo de cielo Auroralis con auroras boreales y horizonte reactivo, terreno cyber grid 3D ondulante, anillos giroscópicos con ecualizador circular 3D, lluvia de código ASCII Matrix, osciloscopio Braille, terminal hacker y widget Now Playing.",
+  "file": "index.html",
+  "general": {
+    "properties": {
+      "ai_aggression": {
+        "options": [
+          {
+            "label": "Dinámico Reactivo (Puntas y Furia en Drops de Graves)",
+            "value": "auto"
+          },
+          {
+            "label": "Furia Permanente (IA Rebelde Escapada // Spikes Máximos)",
+            "value": "always"
+          },
+          {
+            "label": "Estable y Confinada (Sin Puntas Agresivas)",
+            "value": "calm"
+          }
+        ],
+        "order": 7,
+        "text": "Inestabilidad de IA / Puntas Violentas (Rogue AI Spikes)",
+        "type": "combo",
+        "value": "auto"
+      },
+      "audio_reactivity": {
+        "max": 5.0,
+        "min": 0.5,
+        "order": 2,
+        "step": 0.1,
+        "text": "Sensibilidad al Audio (General)",
+        "type": "slider",
+        "value": 2.8
+      },
+      "bass_pulse": {
+        "max": 4.0,
+        "min": 0.5,
+        "order": 3,
+        "step": 0.1,
+        "text": "Impacto de Graves (Bass Drop / Kicks)",
+        "type": "slider",
+        "value": 2.4
+      },
+      "blackwall_fx": {
+        "order": 18,
+        "text": "Efectos Blackwall y Anomalías Glitch",
+        "type": "bool",
+        "value": true
+      },
+      "bloom_strength": {
+        "max": 1.5,
+        "min": 0.1,
+        "order": 5,
+        "step": 0.05,
+        "text": "Intensidad de Resplandor (Bloom)",
+        "type": "slider",
+        "value": 0.26
+      },
+      "camera_zoom": {
+        "options": [
+          {
+            "label": "Órbita Exterior (Vista General Completa)",
+            "value": "orbit"
+          },
+          {
+            "label": "Interior del Núcleo (Observación 360° Sináptica)",
+            "value": "inside"
+          },
+          {
+            "label": "Primer Plano (Detalle Anillos & Stargate)",
+            "value": "closeup"
+          }
+        ],
+        "order": 23,
+        "text": "Modo de Vista (Zoom Núcleo / Órbita Exterior)",
+        "type": "combo",
+        "value": "orbit"
+      },
+      "filament_glow": {
+        "max": 3.0,
+        "min": 0.2,
+        "order": 4,
+        "step": 0.1,
+        "text": "Brillo de Red de Filamentos",
+        "type": "slider",
+        "value": 1.25
+      },
+      "fps_limit": {
+        "options": [
+          {
+            "label": "30 FPS (Ultra Ahorro / Silencioso)",
+            "value": "30"
+          },
+          {
+            "label": "60 FPS (Equilibrado Fluido)",
+            "value": "60"
+          },
+          {
+            "label": "90 FPS (Alto Rendimiento)",
+            "value": "90"
+          },
+          {
+            "label": "120 FPS (Máximo Refresco)",
+            "value": "120"
+          }
+        ],
+        "order": 22,
+        "text": "Límite de Fotogramas (FPS / Optimización CPU)",
+        "type": "combo",
+        "value": "60"
+      },
+      "mouse_interaction": {
+        "order": 21,
+        "text": "Parallax / Interacción con Ratón",
+        "type": "bool",
+        "value": true
+      },
+      "rotation_speed": {
+        "max": 3.0,
+        "min": 0.0,
+        "order": 6,
+        "step": 0.1,
+        "text": "Velocidad de Rotación Orbital",
+        "type": "slider",
+        "value": 1.0
+      },
+      "schemecolor": {
+        "order": 0,
+        "text": "ui_browse_properties_scheme_color",
+        "type": "color",
+        "value": "0.49 0.33 0.85"
+      },
+      "show_ascii_panel": {
+        "order": 13,
+        "text": "Visualizador ASCII en Movimiento",
+        "type": "bool",
+        "value": true
+      },
+      "show_aurora_sky": {
+        "order": 16,
+        "text": "Cielo y Auroras Auroralis (Shader)",
+        "type": "bool",
+        "value": true
+      },
+      "show_circular_eq": {
+        "order": 17,
+        "text": "Ecualizador Circular 3D en Anillos",
+        "type": "bool",
+        "value": true
+      },
+      "show_code_rain": {
+        "order": 14,
+        "text": "Lluvia de Código ASCII / Matrix Rain",
+        "type": "bool",
+        "value": true
+      },
+      "show_cyber_grid": {
+        "order": 15,
+        "text": "Terreno Cyber Grid 3D Ondulante",
+        "type": "bool",
+        "value": true
+      },
+      "show_hud_rings": {
+        "order": 20,
+        "text": "Anillos Orbitales HUD",
+        "type": "bool",
+        "value": true
+      },
+      "show_media_widget": {
+        "order": 10,
+        "text": "Widget de Música (Now Playing)",
+        "type": "bool",
+        "value": true
+      },
+      "show_oscilloscope": {
+        "order": 12,
+        "text": "Osciloscopio / Onda Sinusoidal Logarítmica",
+        "type": "bool",
+        "value": true
+      },
+      "show_system_deck": {
+        "order": 11,
+        "text": "Panel de Sistema, Reloj & Easter Eggs (JackStar / Star)",
+        "type": "bool",
+        "value": true
+      },
+      "show_telemetry": {
+        "order": 9,
+        "text": "Panel de Telemetría & Ecualizador",
+        "type": "bool",
+        "value": true
+      },
+      "show_terminal": {
+        "order": 8,
+        "text": "Consola Hacker / Logs en Vivo",
+        "type": "bool",
+        "value": true
+      },
+      "starfield_bg": {
+        "order": 19,
+        "text": "Fondo 3D Reactivo de Partículas Estelares",
+        "type": "bool",
+        "value": true
+      },
+      "theme": {
+        "options": [
+          {
+            "label": "SAORI Multiverse (Morphing Dimensional Cósmico)",
+            "value": "saori_universe"
+          },
+          {
+            "label": "Project Capricorn (Arasaka Soulkiller / Rogue AI Blackwall)",
+            "value": "capricorn"
+          },
+          {
+            "label": "Ultron Protocol (Rogue AI Overdrive Carmesí / Ámbar)",
+            "value": "ultron"
+          },
+          {
+            "label": "JackOS Blackwall (Violeta / Dorado / Carmesí)",
+            "value": "jackos"
+          },
+          {
+            "label": "Jarvis Classic (Cian Neón / Ámbar)",
+            "value": "jarvis"
+          },
+          {
+            "label": "Cyberpunk 2077 (Neón Púrpura / Dorado)",
+            "value": "cyberpunk"
+          },
+          {
+            "label": "Matrix Neural (Verde Esmeralda)",
+            "value": "matrix"
+          }
+        ],
+        "order": 1,
+        "text": "Estilo Holográfico (Theme)",
+        "type": "combo",
+        "value": "saori_universe"
+      }
+    },
+    "supportsaudioprocessing": true
+  },
+  "preview": "preview.png",
+  "tags": [
+    "Abstract",
+    "Cyberpunk",
+    "Audio Responsive",
+    "Sci-Fi",
+    "Technology"
+  ],
+  "title": "SAORI // JARVIS Neural Core (Audio Reactive)",
+  "type": "web",
+  "version": 1,
+  "visibility": "public"
 }

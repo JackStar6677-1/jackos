@@ -907,48 +907,42 @@ function onWallpaperAudio(audioArray) {
   const len = audioArray.length;
   const half = Math.floor(len / 2);
 
-  const bassBins = Math.max(1, Math.floor(half * 0.16));
-  const midBins = Math.max(1, Math.floor(half * 0.40));
-  const midStart = bassBins;
-  const midEnd = midStart + midBins;
-  const trebleBins = Math.max(1, half - midEnd);
-
+  // Sub-bass & Bass: Bins 0..7 (Punchy instant transients)
   let b = 0, m = 0, t = 0;
-  for (let i = 0; i < bassBins; i++) {
+  const bassCount = Math.min(8, half);
+  for (let i = 0; i < bassCount; i++) {
     b += (audioArray[i] + audioArray[i + half]) * 0.5;
   }
-  for (let i = midStart; i < midEnd; i++) {
+  rawBass = (b / bassCount) * userSettings.sensitivity * userSettings.bassPulse;
+
+  // Midrange: Bins 8..27 (Vocals & synths)
+  const midStart = bassCount;
+  const midCount = Math.min(20, half - midStart);
+  for (let i = midStart; i < midStart + midCount; i++) {
     m += (audioArray[i] + audioArray[i + half]) * 0.5;
   }
-  for (let i = midEnd; i < half; i++) {
+  rawMid = (m / Math.max(1, midCount)) * userSettings.sensitivity;
+
+  // Treble: Bins 28..55 (Cymbals, transients, snares)
+  const trebleStart = midStart + midCount;
+  const trebleCount = Math.max(1, half - trebleStart);
+  for (let i = trebleStart; i < half; i++) {
     t += (audioArray[i] + audioArray[i + half]) * 0.5;
   }
+  rawTreble = (t / trebleCount) * userSettings.sensitivity;
 
-  const bNorm = b / bassBins;
-  const mNorm = m / midBins;
-  const tNorm = t / trebleBins;
-
-  // Punchy non-linear dynamic gain
-  const bBoost = Math.pow(Math.min(2.5, bNorm * 3.6), 1.05);
-  const mBoost = Math.pow(Math.min(2.5, mNorm * 3.0), 1.05);
-  const tBoost = Math.pow(Math.min(2.5, tNorm * 3.3), 1.05);
-
-  rawBass = Math.min(4.0, bBoost * userSettings.sensitivity * userSettings.bassPulse);
-  rawMid = Math.min(4.0, mBoost * userSettings.sensitivity);
-  rawTreble = Math.min(4.0, tBoost * userSettings.sensitivity);
-
-  // Map to 64 spectrum channels with logarithmic scaling
+  // Map to 64 spectrum channels for HUD & 3D circular visualizers
   for (let i = 0; i < 64; i++) {
-    const logFrac = Math.pow(i / 63, 1.35);
-    const srcIdx = Math.min(half - 1, Math.floor(logFrac * half));
+    const srcIdx = Math.min(half - 1, Math.floor((i / 64) * half));
     const monoVal = (audioArray[srcIdx] + audioArray[srcIdx + half]) * 0.5;
-    const target = Math.min(2.5, monoVal * userSettings.sensitivity * 1.8);
-    audioHistory[i] = target > audioHistory[i] ? target : audioHistory[i] * 0.83;
+    audioHistory[i] = monoVal * userSettings.sensitivity;
   }
 }
 
-// Resilient Wallpaper Engine Audio Hook Registration
+// Resilient Wallpaper Engine Audio Hook Registration (Supports both listener and window hook)
+window.wallpaperAudioListener = onWallpaperAudio;
 function setupAudioHook() {
+  window.wallpaperAudioListener = onWallpaperAudio;
   if (window.wallpaperRegisterAudioListener) {
     window.wallpaperRegisterAudioListener(onWallpaperAudio);
     return true;
@@ -999,93 +993,98 @@ function setupMediaListeners() {
 }
 setupMediaListeners();
 
-// Wallpaper Engine Property Listener
+// Wallpaper Engine Property Listener (Protected & Resilient)
 window.wallpaperPropertyListener = {
   applyUserProperties: function(props) {
-    if (props.theme && THEMES[props.theme.value]) {
-      applyTheme(THEMES[props.theme.value]);
-    }
-    if (props.audio_reactivity) {
-      userSettings.sensitivity = props.audio_reactivity.value;
-    }
-    if (props.bass_pulse) {
-      userSettings.bassPulse = props.bass_pulse.value;
-    }
-    if (props.filament_glow) {
-      userSettings.filamentGlow = props.filament_glow.value;
-      if (holoInstance) holoInstance.setU('uGain', holoInstance.baseGain * 0.40 * props.filament_glow.value);
-    }
-    if (props.bloom_strength) {
-      userSettings.bloomStrength = props.bloom_strength.value;
-      bloomPass.strength = props.bloom_strength.value;
-    }
-    if (props.rotation_speed) {
-      userSettings.rotationSpeed = props.rotation_speed.value;
-    }
-    if (props.ai_aggression) {
-      userSettings.aiAggression = props.ai_aggression.value;
-    }
-    if (props.show_terminal) {
-      userSettings.showTerminal = props.show_terminal.value;
-    }
-    if (props.show_telemetry) {
-      userSettings.showTelemetry = props.show_telemetry.value;
-    }
-    if (props.show_media_widget) {
-      userSettings.showMediaWidget = props.show_media_widget.value;
-    }
-    if (props.show_system_deck) {
-      userSettings.showSystemDeck = props.show_system_deck.value;
-    }
-    if (props.show_oscilloscope) {
-      userSettings.showOscilloscope = props.show_oscilloscope.value;
-    }
-    if (props.show_ascii_panel) {
-      userSettings.showAsciiPanel = props.show_ascii_panel.value;
-    }
-    if (props.show_code_rain) {
-      userSettings.showCodeRain = props.show_code_rain.value;
-    }
-    if (props.show_cyber_grid) {
-      userSettings.showCyberGrid = props.show_cyber_grid.value;
-      gridMesh.visible = userSettings.showCyberGrid;
-    }
-    if (props.show_aurora_sky) {
-      userSettings.showAuroraSky = props.show_aurora_sky.value;
-      skyMesh.visible = userSettings.showAuroraSky;
-    }
-    if (props.show_circular_eq) {
-      userSettings.showCircularEq = props.show_circular_eq.value;
-      circEqHolder.visible = userSettings.showCircularEq;
-    }
-    if (props.blackwall_fx) {
-      userSettings.blackwallFx = props.blackwall_fx.value;
-    }
-    if (props.starfield_bg) {
-      userSettings.starfieldBg = props.starfield_bg.value;
-      if (starfieldPoints) starfieldPoints.visible = userSettings.starfieldBg;
-    }
-    if (props.show_hud_rings) {
-      userSettings.showRings = props.show_hud_rings.value;
-      ringsGroup.visible = userSettings.showRings;
-    }
-    if (props.mouse_interaction) {
-      userSettings.mouseInteraction = props.mouse_interaction.value;
-      controls.enabled = userSettings.mouseInteraction;
-    }
-    if (props.fps_limit) {
-      userSettings.fpsLimit = parseInt(props.fps_limit.value, 10) || 60;
-      targetFps = userSettings.fpsLimit;
-      fpsInterval = 1000 / targetFps;
-    }
-    if (props.camera_zoom) {
-      if (props.camera_zoom.value === 'inside') {
-        targetCamDist = 20;
-      } else if (props.camera_zoom.value === 'closeup') {
-        targetCamDist = 120;
-      } else {
-        targetCamDist = 380;
+    if (!props) return;
+    try {
+      if (props.theme && THEMES[props.theme.value]) {
+        applyTheme(THEMES[props.theme.value]);
       }
+      if (props.audio_reactivity) {
+        userSettings.sensitivity = props.audio_reactivity.value;
+      }
+      if (props.bass_pulse) {
+        userSettings.bassPulse = props.bass_pulse.value;
+      }
+      if (props.filament_glow) {
+        userSettings.filamentGlow = props.filament_glow.value;
+        if (holoInstance) holoInstance.setU('uGain', holoInstance.baseGain * 0.40 * props.filament_glow.value);
+      }
+      if (props.bloom_strength) {
+        userSettings.bloomStrength = props.bloom_strength.value;
+        if (bloomPass) bloomPass.strength = props.bloom_strength.value;
+      }
+      if (props.rotation_speed) {
+        userSettings.rotationSpeed = props.rotation_speed.value;
+      }
+      if (props.ai_aggression) {
+        userSettings.aiAggression = props.ai_aggression.value;
+      }
+      if (props.show_terminal) {
+        userSettings.showTerminal = props.show_terminal.value;
+      }
+      if (props.show_telemetry) {
+        userSettings.showTelemetry = props.show_telemetry.value;
+      }
+      if (props.show_media_widget) {
+        userSettings.showMediaWidget = props.show_media_widget.value;
+      }
+      if (props.show_system_deck) {
+        userSettings.showSystemDeck = props.show_system_deck.value;
+      }
+      if (props.show_oscilloscope) {
+        userSettings.showOscilloscope = props.show_oscilloscope.value;
+      }
+      if (props.show_ascii_panel) {
+        userSettings.showAsciiPanel = props.show_ascii_panel.value;
+      }
+      if (props.show_code_rain) {
+        userSettings.showCodeRain = props.show_code_rain.value;
+      }
+      if (props.show_cyber_grid) {
+        userSettings.showCyberGrid = props.show_cyber_grid.value;
+        if (typeof gridMesh !== 'undefined' && gridMesh) gridMesh.visible = userSettings.showCyberGrid;
+      }
+      if (props.show_aurora_sky) {
+        userSettings.showAuroraSky = props.show_aurora_sky.value;
+        if (typeof skyMesh !== 'undefined' && skyMesh) skyMesh.visible = userSettings.showAuroraSky;
+      }
+      if (props.show_circular_eq) {
+        userSettings.showCircularEq = props.show_circular_eq.value;
+        if (typeof circEqHolder !== 'undefined' && circEqHolder) circEqHolder.visible = userSettings.showCircularEq;
+      }
+      if (props.blackwall_fx) {
+        userSettings.blackwallFx = props.blackwall_fx.value;
+      }
+      if (props.starfield_bg) {
+        userSettings.starfieldBg = props.starfield_bg.value;
+        if (typeof starfieldPoints !== 'undefined' && starfieldPoints) starfieldPoints.visible = userSettings.starfieldBg;
+      }
+      if (props.show_hud_rings) {
+        userSettings.showRings = props.show_hud_rings.value;
+        if (typeof ringsGroup !== 'undefined' && ringsGroup) ringsGroup.visible = userSettings.showRings;
+      }
+      if (props.mouse_interaction) {
+        userSettings.mouseInteraction = props.mouse_interaction.value;
+        if (controls) controls.enabled = userSettings.mouseInteraction;
+      }
+      if (props.fps_limit) {
+        userSettings.fpsLimit = parseInt(props.fps_limit.value, 10) || 60;
+        targetFps = userSettings.fpsLimit;
+        fpsInterval = 1000 / targetFps;
+      }
+      if (props.camera_zoom) {
+        if (props.camera_zoom.value === 'inside') {
+          targetCamDist = 20;
+        } else if (props.camera_zoom.value === 'closeup') {
+          targetCamDist = 120;
+        } else {
+          targetCamDist = 380;
+        }
+      }
+    } catch (err) {
+      console.warn('applyUserProperties error:', err);
     }
   },
   setPaused: function(isPaused) {
@@ -1732,11 +1731,11 @@ function renderHud(time, delta, isAudioActive, isInside = false) {
     }
 
     // Bottom Spectrum Audio Frequency Visualizer (Along bottom edge)
-    if (userSettings.showOscilloscope && audioFrequencies.length >= 32) {
+    if (userSettings.showOscilloscope && audioHistory.length >= 32) {
       const specY = h - 6;
       const step = w / 32;
       for (let i = 0; i < 32; i++) {
-        const val = audioFrequencies[i] || 0;
+        const val = audioHistory[i] || 0;
         const bH = Math.min(16, val * 16);
         hudCtx.fillStyle = i < 8 ? '#ff2a85' : (i < 20 ? '#00f0ff' : '#22c55e');
         hudCtx.fillRect(i * step, specY - bH, step - 1, bH);
