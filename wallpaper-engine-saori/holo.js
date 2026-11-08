@@ -140,7 +140,7 @@ void main(){
     br += exp(-swDist * swDist * 0.02) * 1.5;
   }
 
-  c = mix(c, vec3(1.0), clamp(dg * dg * dg * 0.9 + (st > 1.5 ? 0.9 : 0.0) + (st > 2.5 ? 0.5 : 0.0), 0.0, 1.0));
+  c = mix(c, vec3(1.0), clamp(dg * dg * 0.40, 0.0, 0.45));
   vC = c * br * uGain;
 }
 `;
