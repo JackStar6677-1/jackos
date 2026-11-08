@@ -134,4 +134,23 @@ Luego clic derecho en el panel → *Añadir widgets* → **JackOS Monitor** y **
 
 Para GRUB, conky y cursores mira el repo de **Nix**: [Blackwall-Kubuntu](https://github.com/DrgX89/Blackwall-Kubuntu) (GRUB negro con selección roja, JetBrains Mono). Los cursores los probé y no me convencieron, así que aquí no van.
 
+
+<img src="assets/divider.svg" width="100%">
+
+## ▌06 · INTEGRACIÓN WINDOWS & WALLPAPER ENGINE
+
+Para usar la interfaz y el ecosistema en entornos **Windows 11**:
+
+### 1. JackOS Bridge (Acceso Seguro & Micrófono)
+Carpeta: [`windows/`](windows/)
+* **`jackos_bridge.py`**: Proxy local multihilo en `127.0.0.1:8096` hacia el VPS Star (`100.114.161.74:8096`).
+* **Trusted Origin (Secure Context)**: Resuelve la restricción de navegadores modernos (Brave, Chrome) que bloquean la API de reconocimiento de voz (micrófono) en IPs HTTP directas, permitiendo hablar con SAORI sin tocar flags de seguridad.
+* **`INICIAR_JACKOS_HUD.bat`**: Lanza el bridge y abre Brave en modo ventana de aplicación (`--app=http://localhost:8096/jarvis.html`).
+
+### 2. Wallpaper Engine · SAORI Holographic Core (Audio-Reactivo)
+Carpeta: [`wallpaper-engine-saori/`](wallpaper-engine-saori/)
+* Proyecto interactivo para **Wallpaper Engine** que recrea el núcleo holográfico 3D de SAORI con el estilo de millones de entrelazamientos del grafo de Star (134.668 nodos, 366.093 aristas reales y 17 contenedores en órbita).
+* **Reactivo a sonidos / música**: Escucha el espectro de audio mediante `window.wallpaperRegisterAudioListener`. Los graves generan ondas de choque expansivas en los anillos orbitales y pulsan el núcleo; los medios y agudos encienden los filamentos de la nube neural.
+* **Personalización en vivo**: 5 paletas de color configurables desde Wallpaper Engine (*JackOS*, *Cyberpunk Cyan*, *Blood Orange*, *Matrix Emerald*, *Deep Violet*), velocidad de rotación, post-procesado UnrealBloom y alternador de anillos. Incluye `preview.bat` para prueba directa en navegador.
+
 <p align="center"><sub>JackOS // hecho en Nova · wake the f*** up, samurai.</sub></p>

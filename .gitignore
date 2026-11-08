@@ -1,1 +1,3 @@
 animado/*.mp4
+__pycache__/
+*.pyc
