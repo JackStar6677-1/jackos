@@ -153,8 +153,16 @@ let mediaState = {
   lastUpdate: 0
 };
 
-// Scene Setup
+// Scene & Canvas Setup
 const canvas = document.getElementById('gl');
+const hudCanvas = document.getElementById('hud-canvas');
+const hudCtx = hudCanvas ? hudCanvas.getContext('2d') : null;
+
+// Camera Distance State
+let targetCamDist = 380;
+const MIN_CAM_DIST = 14.0;
+const MAX_CAM_DIST = 720.0;
+
 const renderer = new THREE.WebGLRenderer({
   canvas,
   antialias: false,
@@ -215,10 +223,10 @@ function onResize() {
   }
   camera.updateProjectionMatrix();
 
-  hudCanvas.width = w * dpr;
-  hudCanvas.height = h * dpr;
-  hudCtx.setTransform(1, 0, 0, 1, 0, 0);
-  hudCtx.scale(dpr, dpr);
+  if (hudCanvas) {
+    hudCanvas.width = w;
+    hudCanvas.height = h;
+  }
 }
 window.addEventListener('resize', onResize);
 onResize();
@@ -1113,9 +1121,6 @@ window.addEventListener('click', initFallbackAudio, { once: true });
 // Mouse Parallax & Dynamic Zoom Engine
 let mouseX = 0, mouseY = 0;
 let targetRotX = 0, targetRotY = 0;
-let targetCamDist = 380;
-const MIN_CAM_DIST = 14.0;
-const MAX_CAM_DIST = 720.0;
 
 function applyZoomStep(deltaY) {
   // deltaY < 0 = scroll up (zoom into core)
@@ -1551,10 +1556,6 @@ function animate(currentTime) {
   // Render 2D Cyberpunk HUD & Overlays
   renderHud(time, delta, isAudioActive, isInside);
 }
-
-// 2D HUD Canvas
-const hudCanvas = document.getElementById('hud-canvas');
-const hudCtx = hudCanvas ? hudCanvas.getContext('2d') : null;
 
 // ASCII Braille Audio Waveform Glyph Map
 const BRAILLE_WAVE = [' ', '⡀', '⣀', '⣄', '⣤', '⣦', '⣶', '⣷', '⣿'];
