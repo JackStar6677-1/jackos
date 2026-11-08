@@ -93,7 +93,8 @@ let currentTheme = THEMES.saori_universe;
 let userSettings = {
   sensitivity: 2.8,   // High-impact sensitivity default
   bassPulse: 2.4,     // High-impact bass drop punch
-  filamentGlow: 1.15,
+  filamentGlow: 1.15,
+
   sphereBreathing: false,
   bloomStrength: 0.20,
   rotationSpeed: 1.0,
@@ -807,6 +808,15 @@ async function initFleet() {
 }
 initFleet();
 
+// Guaranteed loading indicator cleanup fallback (prevents stuck indicator screen)
+setTimeout(() => {
+  const el = document.getElementById('loading-indicator');
+  if (el) {
+    el.style.opacity = '0';
+    setTimeout(() => { if (el && el.parentNode) el.parentNode.removeChild(el); }, 600);
+  }
+}, 4000);
+
 // 8. Load Full 134,668 Node Neural Graph
 let holoInstance = null;
 async function initGraph() {
@@ -825,12 +835,18 @@ async function initGraph() {
 
     if (statusEl) {
       statusEl.style.opacity = '0';
-      setTimeout(() => statusEl.remove(), 600);
+      setTimeout(() => { if (statusEl && statusEl.parentNode) statusEl.parentNode.removeChild(statusEl); }, 600);
     }
   } catch (err) {
     console.error('Error loading dataset:', err);
     const statusEl = document.getElementById('loading-indicator');
-    if (statusEl) statusEl.textContent = 'ERROR CARGANDO DATOS: ' + err.message;
+    if (statusEl) {
+      statusEl.textContent = 'ERROR CARGANDO DATOS: ' + err.message;
+      setTimeout(() => {
+        statusEl.style.opacity = '0';
+        setTimeout(() => { if (statusEl && statusEl.parentNode) statusEl.parentNode.removeChild(statusEl); }, 600);
+      }, 3000);
+    }
   }
 }
 initGraph();
@@ -906,21 +922,45 @@ function onWallpaperAudio(audioArray) {
   }
 }
 
-// Resilient Wallpaper Engine Audio Hook Registration (Supports both listener and window hook)
+// Resilient Wallpaper Engine Audio Hook Registration & Auto-Recovery Watchdog
+let lastAudioRegistered = 0;
 window.wallpaperAudioListener = onWallpaperAudio;
+window._saoriAudioHandler = onWallpaperAudio;
+
 function setupAudioHook() {
   window.wallpaperAudioListener = onWallpaperAudio;
+  window._saoriAudioHandler = onWallpaperAudio;
   if (window.wallpaperRegisterAudioListener) {
-    window.wallpaperRegisterAudioListener(onWallpaperAudio);
-    return true;
+    try {
+      window.wallpaperRegisterAudioListener(onWallpaperAudio);
+      lastAudioRegistered = performance.now();
+      return true;
+    } catch (e) {
+      console.warn('Audio hook error:', e);
+    }
   }
   return false;
 }
-if (!setupAudioHook()) {
-  const regInterval = setInterval(() => {
-    if (setupAudioHook()) clearInterval(regInterval);
-  }, 200);
-}
+
+setupAudioHook();
+
+// Self-healing audio watchdog:
+// When Windows switches audio output devices (e.g. Speakers -> Headphones / HDMI monitor),
+// WASAPI loopback drops and restarts. We continuously ensure the listener callback is bound,
+// and if packets stop for > 2.5s, re-register immediately.
+setInterval(() => {
+  window.wallpaperAudioListener = onWallpaperAudio;
+  window._saoriAudioHandler = onWallpaperAudio;
+  const now = performance.now();
+  if (now - lastAudioPacketTime > 2500 && now - lastAudioRegistered > 2000) {
+    if (window.wallpaperRegisterAudioListener) {
+      try {
+        window.wallpaperRegisterAudioListener(onWallpaperAudio);
+        lastAudioRegistered = now;
+      } catch (e) {}
+    }
+  }
+}, 1500);
 
 // Media Player (Now Playing) Integration
 function setupMediaListeners() {

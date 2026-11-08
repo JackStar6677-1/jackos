@@ -77,6 +77,25 @@
     }
   }
   </script>
+  <script>
+    // Early bridge for Wallpaper Engine CEF audio & lifecycle
+    window._earlyAudioQueue = null;
+    window.wallpaperAudioListener = function(audioArray) {
+      if (window._saoriAudioHandler) {
+        window._saoriAudioHandler(audioArray);
+      } else {
+        window._earlyAudioQueue = audioArray;
+      }
+    };
+    // Failsafe: never leave loading banner stuck on screen
+    setTimeout(function() {
+      var el = document.getElementById('loading-indicator');
+      if (el) {
+        el.style.opacity = '0';
+        setTimeout(function() { if (el && el.parentNode) el.parentNode.removeChild(el); }, 600);
+      }
+    }, 4000);
+  </script>
 </head>
 <body>
   <canvas id="gl"></canvas>
