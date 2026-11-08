@@ -1562,10 +1562,17 @@ function animate(currentTime) {
   // 8. Hologram Uniforms (Node Wave Deformation, Filament Vibration & Violent Spikes)
   if (holoInstance) {
     holoInstance.setU('uTime', time);
-    // SAORI Multiverse Dynamic Topology Morphing (mixes between graph topologies tJ and tU)
-    if (currentTheme === THEMES.saori_universe) {
-      holoInstance.setU('uMix', 0.0);
+    // SAORI Multiverse Dynamic Topology & Rogue Spike Morphing
+    let targetMix = 0.0;
+    if (userSettings.aiAggression === 'always') {
+      targetMix = 0.25 + Math.sin(time * 2.5) * 0.08;
+    } else if (userSettings.aiAggression === 'calm') {
+      targetMix = 0.0; // Strictly pristine spherical geometry
+    } else {
+      // Auto: Pristine 3D sphere in normal state (0.0), erupts on drops/spikes!
+      targetMix = Math.min(0.28, spikeIntensity * 0.30);
     }
+    holoInstance.setU('uMix', targetMix);
     holoInstance.updateAudio(smoothBass, smoothMid, smoothTreble, shockwaveRadius, rageLevel, spikeIntensity, userSettings.sphereBreathing);
     holoInstance.group.rotation.y = time * 0.10 * userSettings.rotationSpeed;
   }

@@ -99,13 +99,12 @@ void main(){
   }
 
   // Controlled Electric Needles / Rogue Spikes:
-  // Triggers ONLY during heavy bass kicks (bass > 0.65) or AI rage (uRage > 0.05)
-  // and ONLY for ~3.5% of outer surface nodes so the sphere NEVER breaks or turns into a sun
+  // Erupts visibly during Rogue AI Overdrive (uRage > 0.05) or heavy bass drops (uAudioBass > 0.55)
   float combRage = uRage + uSpikeIntensity;
-  if (combRage > 0.05 || uAudioBass > 0.65) {
-    float h = hash(i * 2.718 + floor(uTime * 14.0) * 0.1);
-    if (h > 0.965) {
-      float reach = (uAudioBass * 16.0 + combRage * 28.0);
+  if (combRage > 0.05 || uAudioBass > 0.55) {
+    float h = hash(i * 2.718 + floor(uTime * 12.0) * 0.1);
+    if (h > 0.88) {
+      float reach = (uAudioBass * 25.0 + combRage * 45.0) * (h - 0.88) * 8.3;
       pos += normalize(pos + vec3(1e-4)) * reach;
     }
   }
@@ -188,6 +187,15 @@ void main(){
   if (uBreathing > 0.5) {
     pa *= 1.0 + (uAudioBass * 0.08 * sin(length(pa) * 0.05 - uTime * 2.0));
     pb *= 1.0 + (uAudioBass * 0.08 * sin(length(pb) * 0.05 - uTime * 2.0));
+  }
+
+  // Rogue AI Spikes on Synaptic Filaments
+  float combRage = uRage + uSpikeIntensity;
+  if (combRage > 0.05 || uAudioBass > 0.55) {
+    float ha = hash(aA * 2.718 + floor(uTime * 12.0) * 0.1);
+    if (ha > 0.88) pa += normalize(pa + vec3(1e-4)) * ((uAudioBass * 25.0 + combRage * 45.0) * (ha - 0.88) * 8.3);
+    float hb = hash(aB * 2.718 + floor(uTime * 12.0) * 0.1);
+    if (hb > 0.88) pb += normalize(pb + vec3(1e-4)) * ((uAudioBass * 25.0 + combRage * 45.0) * (hb - 0.88) * 8.3);
   }
 
   vec3 p = mix(pa, pb, t);
@@ -501,7 +509,8 @@ export class Hologram {
     this.setU('uAudioTreble', Number.isFinite(treble) ? treble : 0.0);
     this.setU('uShockwave', Number.isFinite(shockwave) ? shockwave : 0.0);
     this.setU('uRage', Number.isFinite(rage) ? rage : 0.0);
-    this.setU('uSpikeIntensity', Number.isFinite(spike) ? spike : 0.0);
+    this.setU('uSpikeIntensity', Number.isFinite(spike) ? spike : 0.0);
+
     this.setU('uBreathing', breathing ? 1.0 : 0.0);
   }
 }
