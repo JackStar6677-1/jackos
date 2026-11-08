@@ -1960,9 +1960,11 @@ function renderHud(time, delta, isAudioActive, isInside = false) {
   }
 
   // 6. Right Stack Panel 3: Cyberpunk Now Playing Media Widget
-  if (userSettings.showMediaWidget) {
-    const medX = rightX, medY = midY + midH + 10, medW = panelW, medH = 76;
+  const medW = panelW, medH = 76;
+  const medX = rightX;
+  const medY = midY + midH + 10;
 
+  if (userSettings.showMediaWidget) {
     hudCtx.fillStyle = 'rgba(4, 8, 16, 0.80)';
     hudCtx.fillRect(medX, medY, medW, medH);
 
