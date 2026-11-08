@@ -881,7 +881,10 @@ function applyTheme(theme) {
   }
 }
 
-// Dynamic Wallpaper Engine Audio Processing
+// Dynamic Wallpaper Engine Audio Processing & Energy Detection
+let lastAudioEnergyTime = 0;
+let isAudioSilent = true;
+
 function onWallpaperAudio(audioArray) {
   if (!audioArray || !audioArray.length) return;
   isWallpaperEngine = true;
@@ -891,10 +894,12 @@ function onWallpaperAudio(audioArray) {
   const half = Math.floor(len / 2);
 
   // Sub-bass & Bass: Bins 0..7 (Punchy instant transients)
-  let b = 0, m = 0, t = 0;
+  let b = 0, m = 0, t = 0, sumAll = 0;
   const bassCount = Math.min(8, half);
   for (let i = 0; i < bassCount; i++) {
-    b += (audioArray[i] + audioArray[i + half]) * 0.5;
+    const val = (audioArray[i] + audioArray[i + half]) * 0.5;
+    b += val;
+    sumAll += val;
   }
   rawBass = (b / bassCount) * userSettings.sensitivity * userSettings.bassPulse;
 
@@ -902,7 +907,9 @@ function onWallpaperAudio(audioArray) {
   const midStart = bassCount;
   const midCount = Math.min(20, half - midStart);
   for (let i = midStart; i < midStart + midCount; i++) {
-    m += (audioArray[i] + audioArray[i + half]) * 0.5;
+    const val = (audioArray[i] + audioArray[i + half]) * 0.5;
+    m += val;
+    sumAll += val;
   }
   rawMid = (m / Math.max(1, midCount)) * userSettings.sensitivity;
 
@@ -910,7 +917,9 @@ function onWallpaperAudio(audioArray) {
   const trebleStart = midStart + midCount;
   const trebleCount = Math.max(1, half - trebleStart);
   for (let i = trebleStart; i < half; i++) {
-    t += (audioArray[i] + audioArray[i + half]) * 0.5;
+    const val = (audioArray[i] + audioArray[i + half]) * 0.5;
+    t += val;
+    sumAll += val;
   }
   rawTreble = (t / trebleCount) * userSettings.sensitivity;
 
@@ -919,6 +928,14 @@ function onWallpaperAudio(audioArray) {
     const srcIdx = Math.min(half - 1, Math.floor((i / 64) * half));
     const monoVal = (audioArray[srcIdx] + audioArray[srcIdx + half]) * 0.5;
     audioHistory[i] = monoVal * userSettings.sensitivity;
+  }
+
+  // Energy & Silent Stream Detection (Detects when Windows switched output device)
+  if (sumAll > 0.005) {
+    lastAudioEnergyTime = performance.now();
+    isAudioSilent = false;
+  } else if (performance.now() - lastAudioEnergyTime > 1500) {
+    isAudioSilent = true;
   }
 }
 
@@ -1305,8 +1322,9 @@ function animate(currentTime) {
     lastFpsTime = now;
   }
 
-  // Audio Stream Activity Check
-  const isAudioActive = isWallpaperEngine && (now - lastAudioPacketTime < 1200);
+  // Audio Stream Activity & Real Energy Signal Check
+  const hasAudioPackets = isWallpaperEngine && (now - lastAudioPacketTime < 1400);
+  const isAudioActive = hasAudioPackets && !isAudioSilent;
 
   if (!isAudioActive && fallbackAnalyser && fallbackData) {
     fallbackAnalyser.getByteFrequencyData(fallbackData);
@@ -1572,14 +1590,14 @@ function animate(currentTime) {
   composer.render();
 
   // Render 2D Cyberpunk HUD & Overlays
-  renderHud(time, delta, isAudioActive, isInside);
+  renderHud(time, delta, isAudioActive, isInside, isAudioSilent, hasAudioPackets);
 }
 
 // ASCII Braille Audio Waveform Glyph Map
 const BRAILLE_WAVE = [' ', '⡀', '⣀', '⣄', '⣤', '⣦', '⣶', '⣷', '⣿'];
 const RADAR_GLYPHS = ['/', '—', '\\', '|'];
 
-function renderHud(time, delta, isAudioActive, isInside = false) {
+function renderHud(time, delta, isAudioActive, isInside = false, isAudioSilent = false, hasAudioPackets = false) {
   if (!hudCtx) return;
   const w = window.innerWidth, h = window.innerHeight;
   if (hudCanvas.width !== w || hudCanvas.height !== h) {
@@ -1643,16 +1661,16 @@ function renderHud(time, delta, isAudioActive, isInside = false) {
     hudCtx.fillText('SAORI // NEURAL CORE', 16, 26);
 
     // Status Beacon right
-    const statusText = isRogue ? 'ROGUE' : (isAnomaly ? 'ICE' : (isAudioActive ? 'WASAPI' : 'STANDBY'));
+    const statusText = isRogue ? 'ROGUE' : (isAnomaly ? 'ICE' : (isAudioActive ? 'WASAPI' : (hasAudioPackets ? 'SILENT' : 'STANDBY')));
     hudCtx.font = 'bold 10px "DM Mono", monospace';
     hudCtx.textAlign = 'right';
-    hudCtx.fillStyle = isRogue ? '#ff0038' : (isAnomaly ? '#ff003c' : (isAudioActive ? '#22c55e' : 'rgba(255, 210, 77, 0.8)'));
+    hudCtx.fillStyle = isRogue ? '#ff0038' : (isAnomaly ? '#ff003c' : (isAudioActive ? '#22c55e' : (hasAudioPackets ? '#ffd24d' : 'rgba(255, 210, 77, 0.8)')));
     hudCtx.fillText(statusText, w - 16, 26);
 
     const sWidth = hudCtx.measureText(statusText).width;
     hudCtx.beginPath();
     hudCtx.arc(w - 16 - sWidth - 8, 22, 3, 0, Math.PI * 2);
-    hudCtx.fillStyle = isRogue ? '#ff0038' : (isAnomaly ? '#ff003c' : (isAudioActive ? '#22c55e' : '#ffd24d'));
+    hudCtx.fillStyle = isRogue ? '#ff0038' : (isAnomaly ? '#ff003c' : (isAudioActive ? '#22c55e' : (hasAudioPackets ? '#ffd24d' : '#888888')));
     hudCtx.fill();
 
     // Row 2: Subtitle
@@ -1781,10 +1799,10 @@ function renderHud(time, delta, isAudioActive, isInside = false) {
   hudCtx.fillText(statusTitle, rightX, 26);
 
   // Status Beacon text right-aligned at w - 24 (Never collides with anything!)
-  const statusText = isRogue ? 'ROGUE SPIKE' : (isAnomaly ? 'ICE BARRIER' : (isAudioActive ? 'WASAPI LIVE' : 'STANDBY'));
+  const statusText = isRogue ? 'ROGUE SPIKE' : (isAnomaly ? 'ICE BARRIER' : (isAudioActive ? 'WASAPI LIVE' : (hasAudioPackets ? 'WASAPI SILENT' : 'STANDBY')));
   hudCtx.font = 'bold 10px "DM Mono", monospace';
   hudCtx.textAlign = 'right';
-  hudCtx.fillStyle = isRogue ? '#ff0038' : (isAnomaly ? '#ff003c' : (isAudioActive ? '#22c55e' : 'rgba(255, 210, 77, 0.8)'));
+  hudCtx.fillStyle = isRogue ? '#ff0038' : (isAnomaly ? '#ff003c' : (isAudioActive ? '#22c55e' : (hasAudioPackets ? '#ffd24d' : 'rgba(255, 210, 77, 0.8)')));
   hudCtx.fillText(statusText, w - 24, 26);
 
   // Status Beacon Dot (10px to the left of the status text)
@@ -1792,7 +1810,7 @@ function renderHud(time, delta, isAudioActive, isInside = false) {
   const dotX = w - 24 - statusMetrics.width - 9;
   hudCtx.beginPath();
   hudCtx.arc(dotX, 22, 3.5, 0, Math.PI * 2);
-  hudCtx.fillStyle = isRogue ? '#ff0038' : (isAnomaly ? '#ff003c' : (isAudioActive ? '#22c55e' : '#ffd24d'));
+  hudCtx.fillStyle = isRogue ? '#ff0038' : (isAnomaly ? '#ff003c' : (isAudioActive ? '#22c55e' : (hasAudioPackets ? '#ffd24d' : '#888888')));
   hudCtx.fill();
 
   // Subtitle (Second Row, Y = 42)
