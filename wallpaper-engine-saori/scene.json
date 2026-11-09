@@ -1,0 +1,50 @@
+{
+	"camera" : 
+	{
+		"center" : "0.000 0.000 -1.000",
+		"eye" : "0.000 0.000 0.000",
+		"up" : "0.000 1.000 0.000"
+	},
+	"general" : 
+	{
+		"ambientcolor" : "0.300 0.300 0.300",
+		"bloom" : true,
+		"bloomstrength" : 
+		{
+			"script" : "'use strict';\n\nconst audio = engine.registerAudioBuffers(engine.AUDIO_RESOLUTION_16);\nlet smoothGlow = 0.0;\n\nexport function update(value) {\n\tif (!audio || !audio.average) return value;\n\tlet b = (audio.average[0] + audio.average[1]) * 0.5;\n\tsmoothGlow += (b - smoothGlow) * 0.22;\n\treturn 1.0 + smoothGlow * 1.2;\n}\n",
+			"value" : 1.2
+		},
+		"bloomthreshold" : 0.35,
+		"clearcolor" : "0.000 0.000 0.000",
+		"orthogonalprojection" : 
+		{
+			"auto" : true
+		},
+		"supportsaudioprocessing" : true
+	},
+	"objects" : 
+	[
+		{
+			"angles" : "0.000 0.000 0.000",
+			"id" : 1,
+			"image" : "models/background.json",
+			"name" : "BackgroundCore",
+			"origin" : "0.000 0.000 0.000",
+			"scale" : 
+			{
+				"script" : "'use strict';\n\nconst audio = engine.registerAudioBuffers(engine.AUDIO_RESOLUTION_16);\nlet smoothBass = 0.0;\n\nexport function update(value) {\n\tif (!audio || !audio.average) return value;\n\tlet raw = (audio.average[0] * 1.6 + audio.average[1] * 1.2 + audio.average[2] * 0.7) / 3.5;\n\tsmoothBass += (raw - smoothBass) * 0.25;\n\tlet s = 1.0 + Math.min(0.22, smoothBass * 0.28);\n\treturn new Vec3(s, s, 1.0);\n}\n",
+				"value" : "1.000 1.000 1.000"
+			},
+			"visible" : true
+		},
+		{
+			"angles" : "0.000 0.000 0.000",
+			"id" : 2,
+			"name" : "NeuralDust",
+			"origin" : "0.000 0.000 0.000",
+			"particle" : "particles/neural_dust.json",
+			"scale" : "1.000 1.000 1.000",
+			"visible" : true
+		}
+	]
+}
