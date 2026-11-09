@@ -886,48 +886,59 @@ let lastAudioEnergyTime = 0;
 let isAudioSilent = true;
 
 function onWallpaperAudio(audioArray) {
-  if (!audioArray || !audioArray.length) return;
+  if (!audioArray || typeof audioArray.length !== 'number' || audioArray.length < 2) return;
   isWallpaperEngine = true;
   lastAudioPacketTime = performance.now();
 
   const len = audioArray.length;
-  const half = Math.floor(len / 2);
+  const half = Math.max(1, Math.floor(len / 2));
+
+  // Bulletproof sanitizer against NaN, null, Infinity or corrupt laptop audio drivers
+  const safeVal = (idx) => {
+    if (idx < 0 || idx >= len) return 0.0;
+    const v = audioArray[idx];
+    return (typeof v === 'number' && Number.isFinite(v) && v > 0) ? Math.min(1.0, v) : 0.0;
+  };
 
   // Sub-bass & Bass: Bins 0..7 (Punchy instant transients)
   let b = 0, m = 0, t = 0, sumAll = 0;
-  const bassCount = Math.min(8, half);
+  const bassCount = Math.max(1, Math.min(8, half));
   for (let i = 0; i < bassCount; i++) {
-    const val = (audioArray[i] + audioArray[i + half]) * 0.5;
+    const val = (safeVal(i) + safeVal(i + half)) * 0.5;
     b += val;
     sumAll += val;
   }
   rawBass = (b / bassCount) * userSettings.sensitivity * userSettings.bassPulse;
+  if (!Number.isFinite(rawBass)) rawBass = 0.0;
 
   // Midrange: Bins 8..27 (Vocals & synths)
   const midStart = bassCount;
-  const midCount = Math.min(20, half - midStart);
+  const midCount = Math.max(1, Math.min(20, half - midStart));
   for (let i = midStart; i < midStart + midCount; i++) {
-    const val = (audioArray[i] + audioArray[i + half]) * 0.5;
+    const val = (safeVal(i) + safeVal(i + half)) * 0.5;
     m += val;
     sumAll += val;
   }
-  rawMid = (m / Math.max(1, midCount)) * userSettings.sensitivity;
+  rawMid = (m / midCount) * userSettings.sensitivity;
+  if (!Number.isFinite(rawMid)) rawMid = 0.0;
 
   // Treble: Bins 28..55 (Cymbals, transients, snares)
-  const trebleStart = midStart + midCount;
+  const trebleStart = Math.min(half - 1, midStart + midCount);
   const trebleCount = Math.max(1, half - trebleStart);
   for (let i = trebleStart; i < half; i++) {
-    const val = (audioArray[i] + audioArray[i + half]) * 0.5;
+    const val = (safeVal(i) + safeVal(i + half)) * 0.5;
     t += val;
     sumAll += val;
   }
   rawTreble = (t / trebleCount) * userSettings.sensitivity;
+  if (!Number.isFinite(rawTreble)) rawTreble = 0.0;
 
   // Map to 64 spectrum channels for HUD & 3D circular visualizers
   for (let i = 0; i < 64; i++) {
     const srcIdx = Math.min(half - 1, Math.floor((i / 64) * half));
-    const monoVal = (audioArray[srcIdx] + audioArray[srcIdx + half]) * 0.5;
-    audioHistory[i] = monoVal * userSettings.sensitivity;
+    const monoVal = (safeVal(srcIdx) + safeVal(srcIdx + half)) * 0.5;
+    const sVal = monoVal * userSettings.sensitivity;
+    audioHistory[i] = Number.isFinite(sVal) ? sVal : 0.0;
   }
 
   // Energy & Silent Stream Detection (Detects when Windows switched output device)
@@ -1359,6 +1370,14 @@ function animate(currentTime) {
     }
   }
 
+  // Bulletproof fallback against corrupt driver values or NaN propagation
+  if (!Number.isFinite(rawBass)) rawBass = 0.0;
+  if (!Number.isFinite(rawMid)) rawMid = 0.0;
+  if (!Number.isFinite(rawTreble)) rawTreble = 0.0;
+  if (!Number.isFinite(smoothBass)) smoothBass = 0.0;
+  if (!Number.isFinite(smoothMid)) smoothMid = 0.0;
+  if (!Number.isFinite(smoothTreble)) smoothTreble = 0.0;
+
   // Smooth filter
   const smoothFactor = Math.min(1.0, delta * 20.0);
   smoothBass += (rawBass - smoothBass) * smoothFactor;
@@ -1544,8 +1563,8 @@ function animate(currentTime) {
     for (let i = 0; i < circEqCount; i++) {
       const cosA = circCos[i];
       const sinA = circSin[i];
-      const val = audioHistory[i % 64] || 0;
-      const pinLength = 6 + val * 48 * userSettings.sensitivity;
+      const val = (Number.isFinite(audioHistory[i % 64]) && audioHistory[i % 64] > 0) ? audioHistory[i % 64] : 0.0;
+      const pinLength = 6 + Math.min(120, val * 48 * userSettings.sensitivity);
       const rOuter = circEqRadius + pinLength;
 
       posAttr.setXYZ(i * 2, cosA * circEqRadius, 0, sinA * circEqRadius);
