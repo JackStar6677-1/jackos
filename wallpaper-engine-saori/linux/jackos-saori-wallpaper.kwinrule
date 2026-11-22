@@ -1,0 +1,27 @@
+[jackos-saori-wallpaper]
+Description=JackOS SAORI Wallpaper (fondo vivo)
+clientmachine=localhost
+wmclass=jackos-saori-wallpaper
+wmclasscomplete=false
+wmclassmatch=1
+title=JackOS SAORI Wallpaper
+titlematch=1
+types=1
+below=true
+belowrule=2
+skiptaskbar=true
+skiptaskbarrule=2
+skippager=true
+skippagerrule=2
+skipswitcher=true
+skipswitcherrule=2
+noborder=true
+noborderrule=2
+position=0,0
+positionrule=2
+size=1897,1186
+sizerule=2
+acceptfocus=false
+acceptfocusrule=2
+type=1
+typerule=2

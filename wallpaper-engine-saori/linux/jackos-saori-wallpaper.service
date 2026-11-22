@@ -1,0 +1,14 @@
+[Unit]
+Description=JackOS SAORI wallpaper vivo (ventana WebEngine)
+After=jackos-saori-daemon.service
+Requires=jackos-saori-daemon.service
+PartOf=graphical-session.target
+
+[Service]
+ExecStartPre=/bin/sleep 3
+ExecStart=/usr/bin/python3 /home/jack/Documentos/Desarrollo/jackos-terminal/wallpaper-engine-saori/linux/wallpaper_window.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=graphical-session.target

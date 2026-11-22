@@ -41,3 +41,18 @@ El wallpaper ya fue desplegado automáticamente en:
 Si quieres probarlo en una ventana de navegador sin abrir Steam:
 - Haz doble clic en el acceso directo de tu escritorio: **`Probar Wallpaper SAORI`**
 - O ejecuta `preview.bat` en esta carpeta.
+
+---
+
+## ▌04 · LINUX (KDE Plasma / Wayland): fondo vivo y reactivo al audio
+No usa Wallpaper Engine: una ventana WebEngine sin marco queda **debajo de todo** (regla de KWin) y recibe el audio del sistema por WebSocket, con el mismo formato (64 izq + 64 der).
+
+- `linux/saori_wallpaper_daemon.py`: sirve la carpeta (`127.0.0.1:18765`) y emite el audio del sink por defecto (PipeWire/Pulse, `parec`) en `127.0.0.1:18766`.
+- `linux/wallpaper_window.py`: la ventana (PyQt6 WebEngine). Ajusta `SAORI_WP_W`/`SAORI_WP_H` a tu pantalla (en píxeles lógicos).
+- `linux/jackos-saori-wallpaper.kwinrule`: pégala en `~/.config/kwinrulesrc` (suma a `count` y a `rules`) y corre `qdbus6 org.kde.KWin /KWin reconfigure`.
+- `linux/*.service`: copia a `~/.config/systemd/user/` y `systemctl --user enable --now jackos-saori-wallpaper.service`.
+- Quitarlo: `systemctl --user disable --now jackos-saori-wallpaper.service`.
+
+Requiere `python3-pyqt6.qtwebengine`, `python3-numpy`, `python3-websockets` y `pulseaudio-utils` (`parec`).
+
+**Pausa automática:** `linux/kwin-pausa/` es un script de KWin (`kpackagetool6 --type KWin/Script --install linux/kwin-pausa`, luego actívalo en Configuración > Reglas de ventana > Scripts de KWin o con `kwriteconfig6 --file kwinrc --group Plugins --key jackos-saori-pausaEnabled true`). Congela la página (0 % de CPU) cuando una ventana opaca maximizada o a pantalla completa tapa el escritorio, y la reanuda al soltarla. Ignora Konsole y Antigravity porque son translúcidas.

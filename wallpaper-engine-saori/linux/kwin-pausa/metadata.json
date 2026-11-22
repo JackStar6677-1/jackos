@@ -1,0 +1,13 @@
+{
+    "KPackageStructure": "KWin/Script",
+    "KPlugin": {
+        "Id": "jackos-saori-pausa",
+        "Name": "JackOS SAORI: pausar fondo",
+        "Description": "Pausa el wallpaper SAORI cuando una ventana maximizada o a pantalla completa lo tapa",
+        "Icon": "preferences-desktop-wallpaper",
+        "License": "MIT",
+        "Version": "1.0"
+    },
+    "X-Plasma-API": "javascript",
+    "X-Plasma-MainScript": "code/main.js"
+}
